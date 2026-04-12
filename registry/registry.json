@@ -1,0 +1,93 @@
+{
+  "name": "kazeui",
+  "version": "0.1.0",
+  "baseUrl": "https://raw.githubusercontent.com/abderrahimghazali/kaze/main/registry",
+  "lib": ["tokens.ts", "icons.tsx"],
+  "styles": "globals.css",
+  "components": {
+    "accordion": {
+      "name": "Accordion",
+      "description": "Animated expand/collapse with height transitions",
+      "files": ["accordion.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    "avatar": {
+      "name": "Avatar",
+      "description": "Initials, images, status dots, ring accents, animated entrance",
+      "files": ["avatar.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    "avatar-group": {
+      "name": "AvatarGroup",
+      "description": "Stacked avatars with overflow and hover fan-out",
+      "files": ["avatar-group.tsx"],
+      "dependencies": [],
+      "registryDependencies": ["avatar"]
+    },
+    "badge": {
+      "name": "Badge",
+      "description": "Semantic status indicators with tinted backgrounds",
+      "files": ["badge.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    "button": {
+      "name": "Button",
+      "description": "Five variants, three sizes, icon composable",
+      "files": ["button.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    "card": {
+      "name": "Card",
+      "description": "Surface elevation with hover lift",
+      "files": ["card.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    "code-block": {
+      "name": "CodeBlock",
+      "description": "Syntax-highlighted code display with copy button",
+      "files": ["code-block.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    "dialog": {
+      "name": "Dialog",
+      "description": "Modal overlay with scale-in animation",
+      "files": ["dialog.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    "input": {
+      "name": "Input",
+      "description": "Focus rings, icon slots, optical alignment",
+      "files": ["input.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    "separator": {
+      "name": "Separator",
+      "description": "Labeled horizontal divider",
+      "files": ["separator.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    "tabs": {
+      "name": "Tabs",
+      "description": "Sliding underline indicator with smooth transitions",
+      "files": ["tabs.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    "toggle": {
+      "name": "Toggle",
+      "description": "Switch with thumb animation and ARIA roles",
+      "files": ["toggle.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    }
+  }
+}
