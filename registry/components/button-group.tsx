@@ -1,8 +1,9 @@
 "use client"
+import React, { Children } from "react"
 import { tokens } from "@/lib/kaze/tokens"
 
 export function ButtonGroup({ children }: { children: React.ReactNode }) {
-  const items = Array.isArray(children) ? children.filter(Boolean) : [children]
+  const items = Children.toArray(children)
   return (
     <div style={{
       display: "inline-flex",
@@ -11,14 +12,15 @@ export function ButtonGroup({ children }: { children: React.ReactNode }) {
       border: `1px solid ${tokens.colors.border}`,
       boxShadow: "var(--kaze-shadow-sm)",
     }}>
-      {items.map((child, i) => (
-        <div key={i} style={{
-          borderRight: i < items.length - 1 ? `1px solid ${tokens.colors.border}` : "none",
-          display: "flex",
-        }}>
-          {child}
-        </div>
-      ))}
+      {items.map((child, i) =>
+        React.isValidElement(child) ? React.cloneElement(child as React.ReactElement<{ style?: React.CSSProperties }>, {
+          style: {
+            ...(child.props as { style?: React.CSSProperties }).style,
+            border: "none", borderRadius: 0, boxShadow: "none",
+            borderRight: i < items.length - 1 ? `1px solid ${tokens.colors.border}` : "none",
+          },
+        }) : child
+      )}
     </div>
   )
 }

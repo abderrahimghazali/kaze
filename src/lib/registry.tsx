@@ -249,9 +249,9 @@ export const registry: Record<string, Entry> = {
         content: (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <ButtonGroup>
-              <Button variant="outline" style={{ border: 'none', borderRadius: 0, boxShadow: 'none' }}>Day</Button>
-              <Button variant="outline" style={{ border: 'none', borderRadius: 0, boxShadow: 'none' }}>Week</Button>
-              <Button variant="outline" style={{ border: 'none', borderRadius: 0, boxShadow: 'none' }}>Month</Button>
+              <Button variant="outline">Day</Button>
+              <Button variant="outline">Week</Button>
+              <Button variant="outline">Month</Button>
             </ButtonGroup>
             <ButtonGroup>
               <Button variant="outline" icon={Icons.star} style={{ border: 'none', borderRadius: 0, boxShadow: 'none' }}>Star</Button>
