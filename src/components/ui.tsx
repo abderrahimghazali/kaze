@@ -49,7 +49,7 @@ export function Button({
       background: tokens.colors.accent,
       color: tokens.colors.accentText,
       border: `1px solid ${tokens.colors.accent}`,
-      boxShadow: '0 1px 2px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.06)',
+      boxShadow: '0 1px 3px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.06)',
     },
     secondary: {
       background: tokens.colors.surface,
@@ -66,7 +66,7 @@ export function Button({
       background: tokens.colors.destructive,
       color: '#fff',
       border: `1px solid ${tokens.colors.destructive}`,
-      boxShadow: '0 1px 2px rgba(220,38,38,0.2)',
+      boxShadow: '0 1px 3px rgba(220,38,38,0.2)',
     },
     outline: {
       background: 'transparent',
@@ -82,16 +82,17 @@ export function Button({
       onMouseEnter={(e) => {
         if (disabled) return
         const el = e.currentTarget
-        if (variant === 'primary') el.style.background = tokens.colors.accentHover
-        if (variant === 'secondary') el.style.background = tokens.colors.surfaceHover
+        if (variant === 'primary') { el.style.background = tokens.colors.accentHover; el.style.boxShadow = 'var(--kaze-shadow-md)' }
+        if (variant === 'secondary') { el.style.background = tokens.colors.surfaceHover; el.style.boxShadow = 'var(--kaze-shadow-md)' }
         if (variant === 'ghost') el.style.background = tokens.colors.surfaceHover
-        if (variant === 'outline') el.style.background = tokens.colors.surfaceHover
-        if (variant !== 'primary' && variant !== 'destructive') el.style.transform = 'translateY(-0.5px)'
+        if (variant === 'outline') { el.style.background = tokens.colors.surfaceHover; el.style.boxShadow = 'var(--kaze-shadow-sm)' }
+        el.style.transform = 'translateY(-1px)'
       }}
       onMouseLeave={(e) => {
         if (disabled) return
         const el = e.currentTarget
         el.style.background = variants[variant].background as string
+        el.style.boxShadow = variants[variant].boxShadow as string || 'none'
         el.style.transform = 'translateY(0)'
       }}
     >
@@ -388,9 +389,9 @@ export function Card({ children, padding = '20px', hoverable = false }: { childr
       style={{
         background: tokens.colors.surface, border: `1px solid ${tokens.colors.border}`,
         borderRadius: 'var(--kaze-radius-lg)', padding,
-        boxShadow: hovered ? 'var(--kaze-shadow-md)' : 'var(--kaze-shadow-sm)',
+        boxShadow: hovered ? 'var(--kaze-shadow-lg)' : 'var(--kaze-shadow-sm)',
         transition: 'all var(--kaze-transition)',
-        transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
+        transform: hovered ? 'translateY(-3px)' : 'translateY(0)',
       }}
     >
       {children}

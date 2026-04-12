@@ -7,33 +7,42 @@
   --kaze-font-sans: 'DM Sans', -apple-system, sans-serif;
   --kaze-font-serif: 'Newsreader', Georgia, serif;
   --kaze-font-mono: 'IBM Plex Mono', monospace;
+
+  /* Light — warm stone grays */
   --kaze-bg: #FAFAF9;
   --kaze-surface: #FFFFFF;
   --kaze-surface-hover: #F5F5F4;
   --kaze-surface-active: #EEEEEC;
-  --kaze-border: #E8E6E3;
-  --kaze-border-strong: #D4D1CC;
+  --kaze-border: #E7E5E4;
+  --kaze-border-strong: #D6D3D1;
   --kaze-text: #1C1917;
   --kaze-text-secondary: #78716C;
   --kaze-text-tertiary: #A8A29E;
-  --kaze-accent: #18181B;
-  --kaze-accent-hover: #27272A;
+  --kaze-accent: #1C1917;
+  --kaze-accent-hover: #292524;
   --kaze-accent-text: #FFFFFF;
-  --kaze-ring: rgba(24,24,27,0.12);
-  --kaze-radius-sm: 6px;
-  --kaze-radius-md: 8px;
-  --kaze-radius-lg: 12px;
+  --kaze-ring: rgba(28,25,23,0.1);
+
+  /* Organic radii */
+  --kaze-radius-sm: 10px;
+  --kaze-radius-md: 14px;
+  --kaze-radius-lg: 20px;
   --kaze-radius-full: 9999px;
-  --kaze-shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
-  --kaze-shadow-md: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-  --kaze-shadow-lg: 0 8px 24px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
-  --kaze-transition: 160ms cubic-bezier(0.22, 1, 0.36, 1);
-  --kaze-header-bg: rgba(250,250,249,0.85);
+
+  /* Warm shadows */
+  --kaze-shadow-sm: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+  --kaze-shadow-md: 0 4px 12px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.05);
+  --kaze-shadow-lg: 0 12px 32px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.06);
+
+  --kaze-transition: 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  --kaze-header-bg: rgba(250,250,249,0.88);
   --kaze-overlay: rgba(0,0,0,0.4);
-  --kaze-code-bg: #1C1917;
-  --kaze-code-border: #292524;
-  --kaze-code-text: #E7E5E4;
-  --kaze-code-muted: #78716C;
+
+  --kaze-code-bg: #FAFAF9;
+  --kaze-code-border: #E7E5E4;
+  --kaze-code-text: #57534E;
+  --kaze-code-muted: #A8A29E;
+
   --kaze-destructive: #DC2626;
   --kaze-destructive-light: #FEF2F2;
   --kaze-success: #16A34A;
@@ -44,37 +53,43 @@
   --kaze-warning-light: #FFFBEB;
 }
 
+/* Dark — Zed-inspired cool blue tint */
 [data-theme="dark"] {
-  --kaze-bg: #0C0A09;
-  --kaze-surface: #1C1917;
-  --kaze-surface-hover: #292524;
-  --kaze-surface-active: #44403C;
-  --kaze-border: #292524;
-  --kaze-border-strong: #44403C;
-  --kaze-text: #FAFAF9;
-  --kaze-text-secondary: #A8A29E;
-  --kaze-text-tertiary: #78716C;
-  --kaze-accent: #FAFAF9;
-  --kaze-accent-hover: #E7E5E4;
-  --kaze-accent-text: #0C0A09;
-  --kaze-ring: rgba(250,250,249,0.12);
-  --kaze-shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
-  --kaze-shadow-md: 0 2px 8px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
-  --kaze-shadow-lg: 0 8px 24px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.2);
-  --kaze-header-bg: rgba(12,10,9,0.85);
+  --kaze-bg: #0D1117;
+  --kaze-surface: #161B22;
+  --kaze-surface-hover: #1C2333;
+  --kaze-surface-active: #283040;
+  --kaze-border: #1E2736;
+  --kaze-border-strong: #2A3545;
+  --kaze-text: #E6EDF3;
+  --kaze-text-secondary: #8B949E;
+  --kaze-text-tertiary: #6E7681;
+
+  --kaze-accent: #58A6FF;
+  --kaze-accent-hover: #79B8FF;
+  --kaze-accent-text: #0D1117;
+  --kaze-ring: rgba(88,166,255,0.2);
+
+  --kaze-shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+  --kaze-shadow-md: 0 4px 12px rgba(0,0,0,0.4), 0 1px 3px rgba(0,0,0,0.25);
+  --kaze-shadow-lg: 0 12px 32px rgba(0,0,0,0.5), 0 4px 8px rgba(0,0,0,0.3);
+
+  --kaze-header-bg: rgba(13,17,23,0.9);
   --kaze-overlay: rgba(0,0,0,0.6);
-  --kaze-code-bg: #0C0A09;
-  --kaze-code-border: #1C1917;
-  --kaze-code-text: #E7E5E4;
-  --kaze-code-muted: #78716C;
-  --kaze-destructive: #EF4444;
-  --kaze-destructive-light: rgba(239,68,68,0.12);
-  --kaze-success: #22C55E;
-  --kaze-success-light: rgba(34,197,94,0.12);
-  --kaze-info: #3B82F6;
-  --kaze-info-light: rgba(59,130,246,0.12);
-  --kaze-warning: #F59E0B;
-  --kaze-warning-light: rgba(245,158,11,0.12);
+
+  --kaze-code-bg: #0D1117;
+  --kaze-code-border: #1E2736;
+  --kaze-code-text: #C9D1D9;
+  --kaze-code-muted: #6E7681;
+
+  --kaze-destructive: #F85149;
+  --kaze-destructive-light: rgba(248,81,73,0.12);
+  --kaze-success: #3FB950;
+  --kaze-success-light: rgba(63,185,80,0.12);
+  --kaze-info: #58A6FF;
+  --kaze-info-light: rgba(88,166,255,0.12);
+  --kaze-warning: #D29922;
+  --kaze-warning-light: rgba(210,153,34,0.12);
 }
 
 body {
@@ -103,8 +118,8 @@ body {
   100% { opacity: 1; transform: scale(1); }
 }
 @keyframes avatarRing {
-  0% { box-shadow: 0 0 0 0px rgba(24,24,27,0.25); }
-  100% { box-shadow: 0 0 0 4px rgba(24,24,27,0); }
+  0% { box-shadow: 0 0 0 0px rgba(28,25,23,0.25); }
+  100% { box-shadow: 0 0 0 4px rgba(28,25,23,0); }
 }
 @keyframes statusPulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(22,163,74,0.45); }
