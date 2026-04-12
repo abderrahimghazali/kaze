@@ -6,9 +6,9 @@
   </defs>
   <rect x="6" y="6" width="116" height="116" rx="24" fill="#FAFAF9" filter="url(#s)"/>
   <rect x="6.5" y="6.5" width="115" height="115" rx="23.5" stroke="#E8E6E3" stroke-width="1"/>
-  <g transform="translate(64,64)" stroke="#18181B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <path d="M-24,-14 H6 A7 7 0 1 1 6,-0.5"/>
-    <path d="M-24,0 H14 A9 9 0 1 1 14,18"/>
-    <path d="M-24,14 H2 A7 7 0 1 0 2,27.5"/>
+  <g transform="translate(30,32) scale(2.7)" stroke="#18181B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M17.7 7.7A2.5 2.5 0 1 1 19 12H2"/>
+    <path d="M9.6 4.6A2 2 0 1 1 11 8H2"/>
+    <path d="M12.6 19.4A2 2 0 1 0 14 16H2"/>
   </g>
 </svg>
