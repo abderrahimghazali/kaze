@@ -211,7 +211,7 @@ function RootLayout() {
             }}>
               kaze<span style={{ fontWeight: 300 }}>ui</span>
             </span>
-            <Badge>v0.1.0</Badge>
+            <Badge>v0.2.0</Badge>
           </Link>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
