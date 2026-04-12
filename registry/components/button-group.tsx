@@ -2,6 +2,7 @@
 import { tokens } from "@/lib/kaze/tokens"
 
 export function ButtonGroup({ children }: { children: React.ReactNode }) {
+  const items = Array.isArray(children) ? children.filter(Boolean) : [children]
   return (
     <div style={{
       display: "inline-flex",
@@ -10,16 +11,14 @@ export function ButtonGroup({ children }: { children: React.ReactNode }) {
       border: `1px solid ${tokens.colors.border}`,
       boxShadow: "var(--kaze-shadow-sm)",
     }}>
-      {Array.isArray(children)
-        ? children.map((child, i) => (
-            <div key={i} style={{
-              borderRight: i < children.length - 1 ? `1px solid ${tokens.colors.border}` : "none",
-              display: "flex",
-            }}>
-              {child}
-            </div>
-          ))
-        : children}
+      {items.map((child, i) => (
+        <div key={i} style={{
+          borderRight: i < items.length - 1 ? `1px solid ${tokens.colors.border}` : "none",
+          display: "flex",
+        }}>
+          {child}
+        </div>
+      ))}
     </div>
   )
 }
