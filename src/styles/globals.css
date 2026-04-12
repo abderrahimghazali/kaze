@@ -68,13 +68,13 @@
   --kaze-code-text: #E7E5E4;
   --kaze-code-muted: #78716C;
   --kaze-destructive: #EF4444;
-  --kaze-destructive-light: #1C1917;
+  --kaze-destructive-light: rgba(239,68,68,0.12);
   --kaze-success: #22C55E;
-  --kaze-success-light: #1C1917;
+  --kaze-success-light: rgba(34,197,94,0.12);
   --kaze-info: #3B82F6;
-  --kaze-info-light: #1C1917;
+  --kaze-info-light: rgba(59,130,246,0.12);
   --kaze-warning: #F59E0B;
-  --kaze-warning-light: #1C1917;
+  --kaze-warning-light: rgba(245,158,11,0.12);
 }
 
 body {
