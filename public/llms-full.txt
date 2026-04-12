@@ -1,0 +1,224 @@
+# KazeUI — Full Documentation for LLMs
+
+> Complete reference for AI assistants helping developers use KazeUI.
+
+## Installation
+
+```bash
+npx kazeui-cli init
+```
+
+This creates:
+- `kaze.json` — config with component directory, lib directory, CSS path, import alias
+- `{libDir}/tokens.ts` — CSS variable token references
+- `{libDir}/icons.tsx` — SVG icon components
+- Appends `--kaze-*` CSS variables to your global stylesheet
+
+## Adding Components
+
+```bash
+npx kazeui-cli add button           # single component
+npx kazeui-cli add card dialog      # multiple components
+npx kazeui-cli add avatar-group     # auto-installs avatar dependency
+npx kazeui-cli list                 # show all available components
+```
+
+Components are copied as source files into your project. They import from `@/lib/kaze/tokens` and `@/lib/kaze/icons` (configurable in `kaze.json`).
+
+## Config (kaze.json)
+
+```json
+{
+  "componentsDir": "src/components/ui",
+  "libDir": "src/lib/kaze",
+  "cssPath": "src/styles/globals.css",
+  "aliases": {
+    "lib": "@/lib/kaze"
+  }
+}
+```
+
+## Component API Reference
+
+### Button
+```tsx
+<Button variant="primary" size="md" icon={<Star />} disabled onClick={fn}>
+  Label
+</Button>
+```
+Props: variant ("primary"|"secondary"|"outline"|"ghost"|"destructive"), size ("sm"|"md"|"lg"), disabled (boolean), icon (ReactNode), onClick (function), style (CSSProperties)
+
+### Input
+```tsx
+<Input placeholder="Email" type="email" icon={<Search />} disabled />
+```
+Props: placeholder (string), icon (ReactNode), type (string), disabled (boolean)
+
+### Select
+```tsx
+// Single
+<Select options={[{value:"a",label:"A"}]} defaultValue="a" onChange={fn} />
+
+// Multiple
+<Select multiple options={[...]} defaultValues={["a","b"]} onChangeMultiple={fn} />
+```
+Props: options ({value,label}[]), defaultValue (string), defaultValues (string[]), placeholder (string), multiple (boolean), disabled (boolean), onChange (fn), onChangeMultiple (fn)
+
+### Badge
+```tsx
+<Badge variant="success">Active</Badge>
+```
+Props: variant ("default"|"success"|"destructive"|"info"|"warning"|"outline"), children (ReactNode)
+
+### Toggle
+```tsx
+<Toggle label="Notifications" defaultChecked size="md" />
+```
+Props: defaultChecked (boolean), size ("sm"|"md"), label (string)
+
+### Checkbox
+```tsx
+<Checkbox label="Accept terms" defaultChecked disabled />
+```
+Props: defaultChecked (boolean), label (string), disabled (boolean)
+
+### RadioGroup
+```tsx
+<RadioGroup options={[{value:"a",label:"A"},{value:"b",label:"B"}]} defaultValue="a" />
+```
+Props: options ({value,label}[]), defaultValue (string), name (string), disabled (boolean)
+
+### Accordion
+```tsx
+<Accordion items={[{title:"Q?",content:"A."}]} />
+```
+Props: items ({title,content}[])
+
+### Card
+```tsx
+<Card padding="24px" hoverable>{children}</Card>
+```
+Props: padding (string), hoverable (boolean), children (ReactNode)
+
+### Tabs
+```tsx
+<Tabs items={[{label:"Tab 1",content:"Content 1"}]} />
+```
+Props: items ({label,content}[])
+
+### Avatar
+```tsx
+<Avatar name="Sarah" size={40} src="/photo.jpg" status="online" ring animate />
+```
+Props: name (string), size (number), src (string), status ("online"|"offline"|"busy"|"away"), ring (boolean), animate (boolean), delay (number)
+
+### AvatarGroup
+```tsx
+<AvatarGroup items={[{name:"A",src:"..."}]} size={36} max={4} animate />
+```
+Props: names (string[]) or items ({name,src?}[]), size (number), max (number), animate (boolean)
+
+### Dialog
+```tsx
+const [open, setOpen] = useState(false)
+<Dialog open={open} onClose={() => setOpen(false)} title="Confirm">
+  {children}
+</Dialog>
+```
+Props: open (boolean), onClose (fn), title (string), children (ReactNode). Portaled to document.body.
+
+### Dropdown
+```tsx
+<Dropdown
+  trigger={<Button>Options</Button>}
+  items={[
+    {label:"Edit",icon:<Edit />},
+    "separator",
+    {label:"Delete",destructive:true},
+  ]}
+  align="left"
+/>
+```
+Props: trigger (ReactNode), items (({label,icon?,onClick?,destructive?}|"separator")[]), align ("left"|"right")
+
+### Table
+```tsx
+<Table
+  columns={[{key:"name",label:"Name"},{key:"age",label:"Age",align:"right"}]}
+  rows={[{name:"Sarah",age:"28"}]}
+  striped
+/>
+```
+Props: columns ({key,label,align?}[]), rows (Record<string,ReactNode>[]), striped (boolean)
+
+### DataTable
+```tsx
+<DataTable
+  columns={[{key:"name",label:"Name",sortable:true}]}
+  data={rows}
+  pageSize={10}
+  searchable
+  selectable
+/>
+```
+Props: columns ({key,label,align?,sortable?}[]), data (Record<string,ReactNode>[]), pageSize (number), searchable (boolean), selectable (boolean)
+
+### Toast
+```tsx
+// Place once in layout
+<Toaster />
+
+// Trigger from anywhere
+import { toast } from "@/components/ui/toast"
+toast({ title: "Saved!", description: "Optional details", variant: "success" })
+```
+Variants: "default", "success", "destructive", "info", "warning". Auto-dismisses after 4s.
+
+### Skeleton
+```tsx
+<Skeleton width="75%" height={16} rounded="md" />
+<Skeleton circle height={40} />
+```
+Props: width (number|string), height (number|string), rounded ("sm"|"md"|"lg"|"full"), circle (boolean)
+
+### CodeBlock
+```tsx
+<CodeBlock code={`const x = 1`} language="tsx" />
+```
+Props: code (string), language (string). Includes syntax highlighting and copy button.
+
+### Separator
+```tsx
+<Separator label="Section" />
+```
+Props: label (string)
+
+### ButtonGroup
+```tsx
+<ButtonGroup items={[{label:"Day"},{label:"Week"},{label:"Month"}]} size="sm" />
+```
+Props: items ({label,icon?,onClick?}[]), size ("sm"|"md"|"lg")
+
+## Dark Mode
+
+```tsx
+// Toggle
+document.documentElement.setAttribute('data-theme', 'dark')
+document.documentElement.setAttribute('data-theme', 'light')
+```
+
+All components adapt automatically via CSS variables. No prop changes needed.
+
+## CSS Tokens
+
+Override at `:root` or `[data-theme="dark"]`:
+
+```css
+--kaze-bg, --kaze-surface, --kaze-surface-hover, --kaze-surface-active
+--kaze-border, --kaze-border-strong
+--kaze-text, --kaze-text-secondary, --kaze-text-tertiary
+--kaze-accent, --kaze-accent-hover, --kaze-accent-text
+--kaze-radius-sm (10px), --kaze-radius-md (14px), --kaze-radius-lg (20px)
+--kaze-shadow-sm, --kaze-shadow-md, --kaze-shadow-lg
+--kaze-transition (180ms cubic-bezier(0.22, 1, 0.36, 1))
+```

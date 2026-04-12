@@ -1,0 +1,95 @@
+# KazeUI
+
+> A minimal, composable design system for React. Copy-paste components with clean defaults, sharp details, dark mode, and zero runtime dependencies.
+
+## Overview
+
+KazeUI is a component library where you own the code. Instead of installing a package, you use the CLI to copy component source files directly into your project. No npm dependency, no version conflicts, no runtime overhead.
+
+- Website: https://kazeui.vercel.app
+- GitHub: https://github.com/abderrahimghazali/kaze
+- CLI: `npx kazeui-cli init` then `npx kazeui-cli add <component>`
+
+## Stack
+
+- React 19
+- TypeScript
+- Tailwind CSS v4
+- Vite
+- TanStack Router (docs site)
+- CSS custom properties for theming (`--kaze-*` tokens)
+
+## Components (19)
+
+- Accordion: animated expand/collapse with height transitions
+- Avatar: initials, images, status dots, ring accents, animated entrance
+- AvatarGroup: stacked avatars with overflow count and hover fan-out
+- Badge: six semantic variants (default, success, destructive, info, warning, outline)
+- Button: five variants (primary, secondary, outline, ghost, destructive), three sizes, icon support
+- ButtonGroup: joined button strip
+- Card: surface container with hover elevation
+- Checkbox: animated checkmark with label and disabled state
+- CodeBlock: syntax-highlighted code display with line numbers and copy button
+- DataTable: interactive table with search, column sorting, pagination, row selection
+- Dialog: portaled modal overlay with scale-in animation
+- Dropdown: click-triggered popover menu with items, icons, separators
+- Input: text input with focus rings, icon slot, disabled state
+- RadioGroup: single-select radio buttons with animated dot indicator
+- Select: custom dropdown with single and multiple selection, check indicator
+- Separator: horizontal divider with optional centered label
+- Skeleton: shimmer loading placeholder with configurable shapes
+- Table: data table with typed columns, row hover, striped option
+- Tabs: underline tabs with sliding indicator animation
+- Toast: auto-dismissing notifications with 5 variants via global `toast()` function
+- Toggle: switch with thumb animation and ARIA roles
+
+## Blocks (20)
+
+Pre-built page sections combining multiple components:
+
+- Hero (Aurora): animated gradient blobs + rotating typewriter headline
+- CTA (Spotlight): orbiting radial light + grain texture on dark background
+- 3D Card Effect: mouse-tracked perspective tilt with depth layers and glare
+- Orbiting Icons: 3D atomic orbital paths with real brand logos
+- Bento Grid: asymmetric card layout with mixed column/row spans
+- Pricing: three-tier cards with feature lists and popular highlight
+- Feature Grid: illustrated bento with chat scene, code editor, theme preview
+- Logo Cloud: infinite-scrolling marquee with fade edges
+- Stats: animated counters with shared-border grid
+- Testimonials: infinite dual-column scroll at different speeds
+- Terminal: typing animation with blinking cursor and replay
+- Before/After: draggable slider comparing unstyled vs kaze-styled UI
+- Magnetic Dock: macOS-style proximity magnification with brand logos
+- Layer Stack: 3D exploded view of UI layers on hover
+- Component Morph: smooth transitions between Button/Input/Badge/Card states
+- Spotlight Cursor: dark overlay with flashlight cursor revealing hidden content
+- Navbar: logo, links, and action buttons
+- Footer: multi-column with link groups
+- Login: centered form with social auth
+- Sign Up: registration form with name grid
+
+## Theming
+
+All tokens are CSS custom properties. Toggle dark mode with:
+```
+document.documentElement.setAttribute('data-theme', 'dark')
+```
+
+Light mode uses warm stone grays. Dark mode uses neutral black (#0A0A0A).
+
+Key tokens: `--kaze-bg`, `--kaze-surface`, `--kaze-border`, `--kaze-text`, `--kaze-accent`, `--kaze-radius-sm/md/lg`, `--kaze-shadow-sm/md/lg`, `--kaze-transition`.
+
+## CLI Usage
+
+```bash
+npx kazeui-cli init        # setup config + base files
+npx kazeui-cli add button  # add a component
+npx kazeui-cli list        # show all available components
+```
+
+## Documentation
+
+- Introduction: https://kazeui.vercel.app/
+- Theme Switcher: https://kazeui.vercel.app/theme
+- Components: https://kazeui.vercel.app/components/{name}
+- Blocks: https://kazeui.vercel.app/blocks/{name}
