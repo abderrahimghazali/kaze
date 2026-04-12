@@ -1,8 +1,9 @@
 "use client"
 import { useState } from "react"
+import { tokens } from "@/lib/kaze/tokens"
 import { Icons } from "@/lib/kaze/icons"
 
-const SYN = { keyword: "#C678DD", string: "#98C379", tag: "#E06C75", attr: "#D19A66", comment: "#5C6370", func: "#61AFEF", punct: "#ABB2BF", text: "#E7E5E4" }
+const SYN = { keyword: "#8B5CF6", string: "#16A34A", tag: "#DC2626", attr: "#D97706", comment: "#A8A29E", func: "#2563EB", punct: "#78716C" }
 
 function highlight(code: string): React.ReactNode[] {
   const rules: [RegExp, string][] = [
@@ -35,18 +36,31 @@ function highlight(code: string): React.ReactNode[] {
   return res
 }
 
-export function CodeBlock({ code, language = "jsx" }: { code: string; language?: string }) {
+export function CodeBlock({ code }: { code: string; language?: string }) {
   const [copied, setCopied] = useState(false)
-  const handleCopy = () => { navigator.clipboard.writeText(code); setCopied(true); setTimeout(() => setCopied(false), 1500) }
   return (
-    <div style={{ background: "var(--kaze-code-bg)", borderRadius: "var(--kaze-radius-md)", overflow: "hidden", border: "1px solid var(--kaze-code-border)" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 12px", borderBottom: "1px solid var(--kaze-code-border)" }}>
-        <span style={{ fontFamily: "var(--kaze-font-mono)", fontSize: 11, color: "var(--kaze-code-muted)" }}>{language}</span>
-        <button onClick={handleCopy} style={{ background: "transparent", border: "none", cursor: "pointer", color: copied ? "#4ADE80" : "var(--kaze-code-muted)", display: "flex", alignItems: "center", gap: 4, fontSize: 11, fontFamily: "var(--kaze-font-mono)", transition: "color var(--kaze-transition)" }}>
-          {copied ? Icons.check : Icons.copy}{copied ? "Copied" : "Copy"}
-        </button>
-      </div>
-      <pre style={{ padding: "14px 16px", margin: 0, overflow: "auto", fontFamily: "var(--kaze-font-mono)", fontSize: 13, lineHeight: 1.6, color: SYN.text }}><code>{highlight(code)}</code></pre>
+    <div style={{
+      position: "relative", background: tokens.colors.surface,
+      border: `1px solid ${tokens.colors.border}`,
+      borderRadius: "var(--kaze-radius-md)", overflow: "hidden",
+    }}>
+      <button
+        onClick={() => { navigator.clipboard.writeText(code); setCopied(true); setTimeout(() => setCopied(false), 1500) }}
+        style={{
+          position: "absolute", top: 8, right: 8,
+          background: tokens.colors.surfaceHover, border: `1px solid ${tokens.colors.border}`,
+          borderRadius: "var(--kaze-radius-sm)", cursor: "pointer",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          width: 28, height: 28, color: copied ? tokens.colors.success : tokens.colors.textTertiary,
+          transition: "all var(--kaze-transition)",
+        }}
+        onMouseEnter={(e) => { e.currentTarget.style.borderColor = tokens.colors.borderStrong }}
+        onMouseLeave={(e) => { e.currentTarget.style.borderColor = tokens.colors.border }}>
+        {copied ? Icons.check : Icons.copy}
+      </button>
+      <pre style={{ padding: "14px 16px", margin: 0, overflow: "auto", fontFamily: "var(--kaze-font-mono)", fontSize: 13, lineHeight: 1.7, color: tokens.colors.textSecondary }}>
+        <code>{highlight(code)}</code>
+      </pre>
     </div>
   )
 }

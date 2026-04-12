@@ -2,8 +2,9 @@ import { useState } from 'react'
 import { tokens } from '@/lib/tokens'
 import { Icons } from '@/lib/icons'
 import {
-  Button, ButtonGroup, Input, Badge, Toggle, Checkbox, RadioGroup, Accordion, Card,
-  Tabs, Avatar, AvatarGroup, Dropdown, Dialog, Table, DataTable, Separator, CodeBlock,
+  Button, ButtonGroup, Input, Select, Badge, Toggle, Checkbox, RadioGroup, Accordion, Card,
+  Tabs, Avatar, AvatarGroup, Dropdown, Dialog, Table, DataTable, Skeleton, Separator,
+  CodeBlock, toast, Toaster,
 } from '@/components/ui'
 
 type PropDef = { name: string; type: string; default: string }
@@ -552,6 +553,174 @@ const [open, setOpen] = useState(false)
     ],
   },
 
+  select: {
+    name: 'Select',
+    description: 'A custom select dropdown with check indicator, chevron animation, focus ring, and disabled state. Closes on outside click.',
+    examples: [
+      {
+        title: 'Default',
+        direction: 'column',
+        content: (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: 280 }}>
+            <Select
+              placeholder="Select a framework..."
+              options={[
+                { value: 'react', label: 'React' },
+                { value: 'vue', label: 'Vue' },
+                { value: 'svelte', label: 'Svelte' },
+                { value: 'solid', label: 'Solid' },
+                { value: 'angular', label: 'Angular' },
+              ]}
+            />
+            <Select
+              defaultValue="comfortable"
+              options={[
+                { value: 'compact', label: 'Compact' },
+                { value: 'comfortable', label: 'Comfortable' },
+                { value: 'spacious', label: 'Spacious' },
+              ]}
+            />
+            <Select
+              disabled
+              placeholder="Disabled"
+              options={[{ value: 'x', label: 'Option' }]}
+            />
+          </div>
+        ),
+      },
+      {
+        title: 'Multiple',
+        direction: 'column',
+        content: (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: 320 }}>
+            <Select
+              multiple
+              placeholder="Select technologies..."
+              options={[
+                { value: 'react', label: 'React' },
+                { value: 'typescript', label: 'TypeScript' },
+                { value: 'tailwind', label: 'Tailwind CSS' },
+                { value: 'vite', label: 'Vite' },
+                { value: 'tanstack', label: 'TanStack Router' },
+              ]}
+            />
+            <Select
+              multiple
+              defaultValues={['design', 'frontend']}
+              placeholder="Select tags..."
+              options={[
+                { value: 'design', label: 'Design' },
+                { value: 'frontend', label: 'Frontend' },
+                { value: 'backend', label: 'Backend' },
+                { value: 'devops', label: 'DevOps' },
+              ]}
+            />
+          </div>
+        ),
+      },
+    ],
+    code: `import { Select } from "kazeui"
+
+{/* Single */}
+<Select
+  placeholder="Select framework..."
+  options={[
+    { value: "react", label: "React" },
+    { value: "vue", label: "Vue" },
+  ]}
+  onChange={(val) => console.log(val)}
+/>
+
+{/* Multiple */}
+<Select
+  multiple
+  placeholder="Select tags..."
+  defaultValues={["design", "frontend"]}
+  options={[
+    { value: "design", label: "Design" },
+    { value: "frontend", label: "Frontend" },
+    { value: "backend", label: "Backend" },
+  ]}
+  onChangeMultiple={(vals) => console.log(vals)}
+/>`,
+    props: [
+      { name: 'options', type: '{ value: string; label: string }[]', default: '—' },
+      { name: 'defaultValue', type: 'string', default: '—' },
+      { name: 'defaultValues', type: 'string[]', default: '—' },
+      { name: 'placeholder', type: 'string', default: '"Select..."' },
+      { name: 'multiple', type: 'boolean', default: 'false' },
+      { name: 'disabled', type: 'boolean', default: 'false' },
+      { name: 'onChange', type: '(value: string) => void', default: '—' },
+      { name: 'onChangeMultiple', type: '(values: string[]) => void', default: '—' },
+    ],
+  },
+
+  skeleton: {
+    name: 'Skeleton',
+    description: 'A shimmer loading placeholder with configurable dimensions, border radius, and circle mode. Use to indicate content that is loading.',
+    examples: [
+      {
+        title: 'Shapes',
+        direction: 'column',
+        content: (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: 360 }}>
+            <Skeleton height={16} width="75%" />
+            <Skeleton height={16} width="50%" />
+            <Skeleton height={12} width="90%" />
+            <Skeleton height={40} rounded="lg" />
+            <div style={{ display: 'flex', gap: 8 }}>
+              <Skeleton circle height={40} />
+              <Skeleton circle height={40} />
+              <Skeleton circle height={40} />
+            </div>
+          </div>
+        ),
+      },
+      {
+        title: 'Card Skeleton',
+        direction: 'column',
+        content: (
+          <div style={{
+            border: `1px solid ${tokens.colors.border}`, borderRadius: 'var(--kaze-radius-lg)',
+            padding: 20, width: '100%', maxWidth: 320, background: tokens.colors.surface,
+          }}>
+            <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 16 }}>
+              <Skeleton circle height={36} />
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <Skeleton height={14} width="60%" />
+                <Skeleton height={10} width="40%" />
+              </div>
+            </div>
+            <Skeleton height={12} width="100%" />
+            <div style={{ marginTop: 8 }}><Skeleton height={12} width="85%" /></div>
+            <div style={{ marginTop: 8 }}><Skeleton height={12} width="70%" /></div>
+            <div style={{ display: 'flex', gap: 8, marginTop: 16 }}>
+              <Skeleton height={24} width={60} rounded="full" />
+              <Skeleton height={24} width={72} rounded="full" />
+            </div>
+          </div>
+        ),
+      },
+    ],
+    code: `import { Skeleton } from "kazeui"
+
+{/* Text lines */}
+<Skeleton height={16} width="75%" />
+<Skeleton height={12} width="50%" />
+
+{/* Circle avatar */}
+<Skeleton circle height={40} />
+
+{/* Card placeholder */}
+<Skeleton height={200} rounded="lg" />`,
+    props: [
+      { name: 'width', type: 'number | string', default: '"100%"' },
+      { name: 'height', type: 'number | string', default: '16' },
+      { name: 'rounded', type: '"sm" | "md" | "lg" | "full"', default: '"md"' },
+      { name: 'circle', type: 'boolean', default: 'false' },
+    ],
+  },
+
   separator: {
     name: 'Separator',
     description: 'A horizontal divider with an optional centered label. Uses mono font for section headers in documentation layouts.',
@@ -721,6 +890,43 @@ const [open, setOpen] = useState(false)
 ]} />`,
     props: [
       { name: 'items', type: '{ label: string; content: string }[]', default: '—' },
+    ],
+  },
+
+  toast: {
+    name: 'Toast',
+    description: 'Auto-dismissing notification toasts anchored to the bottom-right. Triggered via a global toast() function — no provider wiring needed beyond placing <Toaster /> once.',
+    examples: [
+      {
+        title: 'Variants',
+        content: (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+            <Button variant="secondary" size="sm" onClick={() => toast({ title: 'Event created', description: 'Your event has been saved.' })}>Default</Button>
+            <Button variant="secondary" size="sm" onClick={() => toast({ title: 'Saved successfully', variant: 'success' })}>Success</Button>
+            <Button variant="secondary" size="sm" onClick={() => toast({ title: 'Something went wrong', description: 'Please try again later.', variant: 'destructive' })}>Destructive</Button>
+            <Button variant="secondary" size="sm" onClick={() => toast({ title: 'New update available', variant: 'info' })}>Info</Button>
+            <Button variant="secondary" size="sm" onClick={() => toast({ title: 'Storage almost full', description: '92% used', variant: 'warning' })}>Warning</Button>
+          </div>
+        ),
+      },
+    ],
+    code: `import { toast, Toaster } from "kazeui"
+
+{/* Place once in your layout */}
+<Toaster />
+
+{/* Trigger from anywhere */}
+toast({ title: "Saved successfully", variant: "success" })
+
+toast({
+  title: "Something went wrong",
+  description: "Please try again later.",
+  variant: "destructive",
+})`,
+    props: [
+      { name: 'title', type: 'string', default: '—' },
+      { name: 'description', type: 'string', default: '—' },
+      { name: 'variant', type: '"default" | "success" | "destructive" | "info" | "warning"', default: '"default"' },
     ],
   },
 

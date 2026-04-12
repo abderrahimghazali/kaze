@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { createPortal } from 'react-dom'
+import { Check as LucideCheck, XCircle as LucideXCircle, Info as LucideInfo, TriangleAlert as LucideTriangleAlert } from 'lucide-react'
 import { tokens } from '@/lib/tokens'
 import { Icons } from '@/lib/icons'
 
@@ -675,14 +676,13 @@ export function Separator({ label }: { label?: string }) {
 
 // ─── SYNTAX HIGHLIGHTING ───
 const SYN = {
-  keyword: '#C678DD',
-  string: '#98C379',
-  tag: '#E06C75',
-  attr: '#D19A66',
-  comment: '#5C6370',
-  func: '#61AFEF',
-  punct: '#ABB2BF',
-  text: '#E7E5E4',
+  keyword: '#8B5CF6',
+  string: '#16A34A',
+  tag: '#DC2626',
+  attr: '#D97706',
+  comment: '#A8A29E',
+  func: '#2563EB',
+  punct: '#78716C',
 }
 
 function highlight(code: string): React.ReactNode[] {
@@ -741,28 +741,41 @@ function highlight(code: string): React.ReactNode[] {
 }
 
 // ─── CODE BLOCK ───
-export function CodeBlock({ code, language = 'jsx' }: { code: string; language?: string }) {
+export function CodeBlock({ code }: { code: string; language?: string }) {
   const [copied, setCopied] = useState(false)
-  const handleCopy = () => {
-    navigator.clipboard.writeText(code)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 1500)
-  }
+  const lines = code.split('\n')
   return (
-    <div style={{ background: 'var(--kaze-code-bg)', borderRadius: 'var(--kaze-radius-md)', overflow: 'hidden', border: '1px solid var(--kaze-code-border)' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px', borderBottom: '1px solid var(--kaze-code-border)' }}>
-        <span style={{ fontFamily: 'var(--kaze-font-mono)', fontSize: 11, color: 'var(--kaze-code-muted)' }}>{language}</span>
-        <button onClick={handleCopy} style={{
+    <div style={{
+      position: 'relative',
+      background: tokens.colors.surface,
+      border: `1px solid ${tokens.colors.border}`,
+      borderRadius: 'var(--kaze-radius-md)',
+      overflow: 'hidden',
+    }}>
+      <button
+        onClick={() => { navigator.clipboard.writeText(code); setCopied(true); setTimeout(() => setCopied(false), 1500) }}
+        style={{
+          position: 'absolute', top: 10, right: 10,
           background: 'transparent', border: 'none', cursor: 'pointer',
-          color: copied ? '#4ADE80' : 'var(--kaze-code-muted)', display: 'flex', alignItems: 'center',
-          gap: 4, fontSize: 11, fontFamily: 'var(--kaze-font-mono)', transition: 'color var(--kaze-transition)',
-        }}>
-          {copied ? Icons.check : Icons.copy}
-          {copied ? 'Copied' : 'Copy'}
-        </button>
-      </div>
-      <pre style={{ padding: '14px 16px', margin: 0, overflow: 'auto', fontFamily: 'var(--kaze-font-mono)', fontSize: 13, lineHeight: 1.6, color: SYN.text }}>
-        <code>{highlight(code)}</code>
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          width: 24, height: 24, color: copied ? tokens.colors.success : tokens.colors.textTertiary,
+          transition: 'color var(--kaze-transition)',
+        }}
+      >
+        {copied ? Icons.check : Icons.copy}
+      </button>
+      <pre style={{ padding: '14px 0', margin: 0, overflow: 'auto', fontFamily: 'var(--kaze-font-mono)', fontSize: 13, lineHeight: 1.7 }}>
+        <code>
+          {lines.map((line, i) => (
+            <div key={i} style={{ display: 'flex' }}>
+              <span style={{
+                width: 40, flexShrink: 0, textAlign: 'right', paddingRight: 16,
+                color: tokens.colors.textTertiary, userSelect: 'none', opacity: 0.6,
+              }}>{i + 1}</span>
+              <span style={{ color: tokens.colors.textSecondary, flex: 1 }}>{highlight(line)}</span>
+            </div>
+          ))}
+        </code>
       </pre>
     </div>
   )
@@ -1098,5 +1111,247 @@ export function Dropdown({ trigger, items, align = 'left' }: {
         </div>
       )}
     </div>
+  )
+}
+
+// ─── SELECT ───
+export function Select({ options, defaultValue, defaultValues, placeholder = 'Select...', disabled = false, multiple = false, onChange, onChangeMultiple }: {
+  options: { value: string; label: string }[]
+  defaultValue?: string
+  defaultValues?: string[]
+  placeholder?: string
+  disabled?: boolean
+  multiple?: boolean
+  onChange?: (value: string) => void
+  onChangeMultiple?: (values: string[]) => void
+}) {
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = useState(defaultValue ?? '')
+  const [values, setValues] = useState<Set<string>>(new Set(defaultValues ?? []))
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!open) return
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [open])
+
+  const handleSingle = (v: string) => { setValue(v); onChange?.(v); setOpen(false) }
+  const handleMulti = (v: string) => {
+    const next = new Set(values)
+    if (next.has(v)) next.delete(v); else next.add(v)
+    setValues(next)
+    onChangeMultiple?.(Array.from(next))
+  }
+
+  // Display text
+  const selectedLabels = multiple
+    ? options.filter((o) => values.has(o.value)).map((o) => o.label)
+    : []
+  const singleSelected = options.find((o) => o.value === value)
+  const hasValue = multiple ? values.size > 0 : !!singleSelected
+
+  return (
+    <div ref={ref} style={{ position: 'relative', display: 'inline-flex', width: '100%' }}>
+      <button
+        disabled={disabled}
+        onClick={() => !disabled && setOpen(!open)}
+        style={{
+          fontFamily: 'var(--kaze-font-sans)', fontSize: 14,
+          minHeight: 36, width: '100%', padding: multiple && values.size > 0 ? '4px 12px 4px 6px' : '0 12px',
+          borderRadius: 'var(--kaze-radius-sm)',
+          border: `1px solid ${open ? tokens.colors.borderStrong : tokens.colors.border}`,
+          background: tokens.colors.surface, color: hasValue ? tokens.colors.text : tokens.colors.textTertiary,
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6,
+          cursor: disabled ? 'not-allowed' : 'pointer', outline: 'none',
+          boxShadow: open ? `0 0 0 3px ${tokens.colors.ring}` : 'var(--kaze-shadow-sm)',
+          transition: 'all var(--kaze-transition)',
+          opacity: disabled ? 0.45 : 1, letterSpacing: '-0.01em', textAlign: 'left',
+        }}
+      >
+        <span style={{ flex: 1, display: 'flex', flexWrap: 'wrap', gap: 4, alignItems: 'center' }}>
+          {multiple ? (
+            values.size > 0 ? selectedLabels.map((label) => (
+              <span key={label} style={{
+                fontSize: 12, fontWeight: 500, padding: '2px 8px',
+                borderRadius: 'var(--kaze-radius-full)',
+                background: tokens.colors.surfaceActive, color: tokens.colors.text,
+                display: 'inline-flex', alignItems: 'center', gap: 4,
+              }}>
+                {label}
+                <span
+                  onClick={(e) => { e.stopPropagation(); handleMulti(options.find((o) => o.label === label)!.value) }}
+                  style={{ display: 'flex', cursor: 'pointer', color: tokens.colors.textTertiary }}
+                >
+                  {Icons.x}
+                </span>
+              </span>
+            )) : placeholder
+          ) : (
+            singleSelected ? singleSelected.label : placeholder
+          )}
+        </span>
+        <span style={{
+          display: 'flex', color: tokens.colors.textTertiary, flexShrink: 0,
+          transform: open ? 'rotate(180deg)' : 'rotate(0)',
+          transition: 'transform 200ms ease',
+        }}>
+          {Icons.chevronDown}
+        </span>
+      </button>
+      {open && (
+        <div style={{
+          position: 'absolute', top: 'calc(100% + 4px)', left: 0, right: 0,
+          background: tokens.colors.surface,
+          border: `1px solid ${tokens.colors.border}`,
+          borderRadius: 'var(--kaze-radius-md)',
+          boxShadow: 'var(--kaze-shadow-lg)',
+          padding: '4px', zIndex: 50,
+          animation: 'scaleIn 120ms cubic-bezier(0.22, 1, 0.36, 1)',
+          maxHeight: 220, overflowY: 'auto',
+        }}>
+          {options.map((opt) => {
+            const active = multiple ? values.has(opt.value) : opt.value === value
+            return (
+              <button
+                key={opt.value}
+                onClick={() => multiple ? handleMulti(opt.value) : handleSingle(opt.value)}
+                style={{
+                  width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                  padding: '8px 10px', border: 'none',
+                  background: active ? tokens.colors.surfaceHover : 'transparent',
+                  borderRadius: 'var(--kaze-radius-sm)',
+                  fontFamily: 'var(--kaze-font-sans)', fontSize: 14,
+                  color: tokens.colors.text, cursor: 'pointer',
+                  textAlign: 'left', letterSpacing: '-0.01em', outline: 'none',
+                  transition: 'background var(--kaze-transition)',
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = tokens.colors.surfaceHover }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = active ? tokens.colors.surfaceHover : 'transparent' }}
+              >
+                <span>{opt.label}</span>
+                {active && <span style={{ display: 'flex', color: tokens.colors.accent }}>{Icons.check}</span>}
+              </button>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ─── SKELETON ───
+export function Skeleton({ width, height = 16, rounded = 'md', circle = false, className }: {
+  width?: number | string
+  height?: number | string
+  rounded?: 'sm' | 'md' | 'lg' | 'full'
+  circle?: boolean
+  className?: string
+}) {
+  const r = { sm: 'var(--kaze-radius-sm)', md: 'var(--kaze-radius-md)', lg: 'var(--kaze-radius-lg)', full: 'var(--kaze-radius-full)' }
+  return (
+    <div className={className} style={{
+      width: circle ? height : (width ?? '100%'),
+      height,
+      borderRadius: circle ? '50%' : r[rounded],
+      background: `linear-gradient(90deg, ${tokens.colors.surfaceActive} 25%, ${tokens.colors.surfaceHover} 50%, ${tokens.colors.surfaceActive} 75%)`,
+      backgroundSize: '200% 100%',
+      animation: 'shimmer 1.5s ease-in-out infinite',
+    }} />
+  )
+}
+
+// ─── TOAST ───
+type ToastItem = { id: number; title: string; description?: string; variant?: 'default' | 'success' | 'destructive' | 'info' | 'warning' }
+
+let toastListeners: ((toasts: ToastItem[]) => void)[] = []
+let toastQueue: ToastItem[] = []
+let toastId = 0
+
+export function toast(opts: Omit<ToastItem, 'id'>) {
+  const item = { ...opts, id: ++toastId }
+  toastQueue = [...toastQueue, item]
+  toastListeners.forEach((fn) => fn(toastQueue))
+  setTimeout(() => {
+    toastQueue = toastQueue.filter((t) => t.id !== item.id)
+    toastListeners.forEach((fn) => fn(toastQueue))
+  }, 4000)
+}
+
+export function Toaster() {
+  const [toasts, setToasts] = useState<ToastItem[]>([])
+
+  useEffect(() => {
+    toastListeners.push(setToasts)
+    return () => { toastListeners = toastListeners.filter((fn) => fn !== setToasts) }
+  }, [])
+
+  if (toasts.length === 0) return null
+
+  const variantStyles: Record<string, { border: string; icon: React.ReactNode }> = {
+    default: { border: tokens.colors.border, icon: null },
+    success: { border: tokens.colors.success, icon: <LucideCheck size={16} /> },
+    destructive: { border: tokens.colors.destructive, icon: <LucideXCircle size={16} /> },
+    info: { border: tokens.colors.info, icon: <LucideInfo size={16} /> },
+    warning: { border: tokens.colors.warning, icon: <LucideTriangleAlert size={16} /> },
+  }
+
+  return createPortal(
+    <div style={{
+      position: 'fixed', bottom: 20, right: 20, zIndex: 1100,
+      display: 'flex', flexDirection: 'column', gap: 8, maxWidth: 380,
+    }}>
+      {toasts.map((t) => {
+        const v = variantStyles[t.variant || 'default']
+        return (
+          <div key={t.id} style={{
+            background: tokens.colors.surface,
+            border: `1px solid ${v.border}`,
+            borderRadius: 'var(--kaze-radius-md)',
+            boxShadow: 'var(--kaze-shadow-lg)',
+            padding: '12px 16px',
+            display: 'flex', alignItems: 'flex-start', gap: 10,
+            animation: 'fadeInUp 250ms cubic-bezier(0.22, 1, 0.36, 1)',
+            minWidth: 280,
+          }}>
+            {v.icon && (
+              <span style={{
+                display: 'flex', flexShrink: 0, marginTop: 1,
+                color: v.border,
+              }}>{v.icon}</span>
+            )}
+            <div style={{ flex: 1 }}>
+              <div style={{
+                fontSize: 14, fontWeight: 500, color: tokens.colors.text,
+                fontFamily: 'var(--kaze-font-sans)', letterSpacing: '-0.01em',
+              }}>{t.title}</div>
+              {t.description && (
+                <div style={{
+                  fontSize: 13, color: tokens.colors.textSecondary, marginTop: 2,
+                  fontFamily: 'var(--kaze-font-sans)', lineHeight: 1.4,
+                }}>{t.description}</div>
+              )}
+            </div>
+            <button
+              onClick={() => {
+                toastQueue = toastQueue.filter((x) => x.id !== t.id)
+                toastListeners.forEach((fn) => fn(toastQueue))
+              }}
+              style={{
+                background: 'transparent', border: 'none', cursor: 'pointer',
+                color: tokens.colors.textTertiary, display: 'flex', padding: 2,
+                flexShrink: 0, transition: 'color var(--kaze-transition)',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = tokens.colors.text }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = tokens.colors.textTertiary }}
+            >{Icons.x}</button>
+          </div>
+        )
+      })}
+    </div>,
+    document.body,
   )
 }

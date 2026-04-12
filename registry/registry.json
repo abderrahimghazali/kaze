@@ -110,6 +110,20 @@
       "dependencies": [],
       "registryDependencies": []
     },
+    "skeleton": {
+      "name": "Skeleton",
+      "description": "Shimmer loading placeholder with configurable shape and size",
+      "files": ["skeleton.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    "select": {
+      "name": "Select",
+      "description": "Custom select with searchable dropdown, check indicator, and disabled state",
+      "files": ["select.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
     "separator": {
       "name": "Separator",
       "description": "Labeled horizontal divider",
@@ -122,6 +136,13 @@
       "description": "Sliding underline indicator with smooth transitions",
       "files": ["tabs.tsx"],
       "dependencies": [],
+      "registryDependencies": []
+    },
+    "toast": {
+      "name": "Toast",
+      "description": "Auto-dismissing notification toasts with variants and global trigger",
+      "files": ["toast.tsx"],
+      "dependencies": ["lucide-react"],
       "registryDependencies": []
     },
     "toggle": {

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@tanstack/react-router": "^1",
+    "lucide-react": "^1.8.0",
     "react": "^19",
     "react-dom": "^19"
   },

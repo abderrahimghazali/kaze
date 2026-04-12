@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { tokens } from '@/lib/tokens'
 import { Icons } from '@/lib/icons'
@@ -20,6 +21,25 @@ const componentList = [
   { slug: 'code-block', name: 'Code Block', desc: 'Dark code display with copy button' },
   { slug: 'separator', name: 'Separator', desc: 'Labeled divider for content sections' },
 ]
+
+function CopyButton() {
+  const [copied, setCopied] = useState(false)
+  const cmd = 'npx kazeui-cli init'
+  return (
+    <Button
+      variant="secondary"
+      size="lg"
+      icon={copied ? Icons.check : Icons.copy}
+      onClick={() => {
+        navigator.clipboard.writeText(cmd)
+        setCopied(true)
+        setTimeout(() => setCopied(false), 1500)
+      }}
+    >
+      {cmd}
+    </Button>
+  )
+}
 
 function HomePage() {
   return (
@@ -58,7 +78,7 @@ function HomePage() {
         <Link to="/components/button" style={{ textDecoration: 'none' }}>
           <Button variant="primary" size="lg">Get Started</Button>
         </Link>
-        <Button variant="secondary" size="lg" icon={Icons.copy}>npx kazeui init</Button>
+        <CopyButton />
       </div>
 
       {/* Installation */}
@@ -74,21 +94,8 @@ function HomePage() {
         }}>
           Installation
         </h2>
-        <pre style={{
-          fontFamily: 'var(--kaze-font-mono)',
-          fontSize: 13,
-          lineHeight: 1.7,
-          color: tokens.colors.textSecondary,
-          background: tokens.colors.surface,
-          border: `1px solid ${tokens.colors.border}`,
-          borderRadius: 'var(--kaze-radius-md)',
-          padding: '14px 16px',
-          margin: 0,
-          overflow: 'auto',
-        }}>
-{`npx kazeui-cli init
-npx kazeui-cli add button card avatar`}
-        </pre>
+        <CodeBlock code={`npx kazeui-cli init
+npx kazeui-cli add button card avatar dialog`} />
       </div>
 
       {/* Usage */}
@@ -104,7 +111,7 @@ npx kazeui-cli add button card avatar`}
         }}>
           Usage
         </h2>
-        <CodeBlock language="tsx" code={`import { Button } from "@/components/ui/button"
+        <CodeBlock code={`import { Button } from "@/components/ui/button"
 
 <Button variant="primary" icon={<Star />}>
   Star repo

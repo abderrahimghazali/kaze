@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom'
 import { createRootRoute, Link, Outlet, useNavigate } from '@tanstack/react-router'
 import { tokens } from '@/lib/tokens'
 import { Icons } from '@/lib/icons'
-import { Badge } from '@/components/ui'
+import { Badge, Toaster } from '@/components/ui'
 import { Sidebar } from '@/components/sidebar'
 
 export const Route = createRootRoute({
@@ -25,9 +25,12 @@ const searchItems = [
   { name: 'Dropdown', href: '/components/dropdown' },
   { name: 'Input', href: '/components/input' },
   { name: 'Radio Group', href: '/components/radio-group' },
+  { name: 'Select', href: '/components/select' },
   { name: 'Separator', href: '/components/separator' },
+  { name: 'Skeleton', href: '/components/skeleton' },
   { name: 'Table', href: '/components/table' },
   { name: 'Tabs', href: '/components/tabs' },
+  { name: 'Toast', href: '/components/toast' },
   { name: 'Toggle', href: '/components/toggle' },
 ]
 
@@ -271,12 +274,13 @@ function RootLayout() {
       </header>
 
       <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <Toaster />
 
       {/* Body */}
       <div style={{ display: 'flex' }}>
         <Sidebar />
         <main style={{ flex: 1, minWidth: 0, padding: '40px 48px' }}>
-          <div style={{ maxWidth: 720 }}>
+          <div style={{ maxWidth: 720, margin: '0 auto' }}>
             <Outlet />
           </div>
         </main>
