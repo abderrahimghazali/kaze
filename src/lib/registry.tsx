@@ -254,9 +254,9 @@ export const registry: Record<string, Entry> = {
               <Button variant="outline">Month</Button>
             </ButtonGroup>
             <ButtonGroup>
-              <Button variant="outline" icon={Icons.star} style={{ border: 'none', borderRadius: 0, boxShadow: 'none' }}>Star</Button>
-              <Button variant="outline" icon={Icons.copy} style={{ border: 'none', borderRadius: 0, boxShadow: 'none' }}>Fork</Button>
-              <Button variant="outline" icon={Icons.search} style={{ border: 'none', borderRadius: 0, boxShadow: 'none' }}>Watch</Button>
+              <Button variant="outline" icon={Icons.star}>Star</Button>
+              <Button variant="outline" icon={Icons.copy}>Fork</Button>
+              <Button variant="outline" icon={Icons.search}>Watch</Button>
             </ButtonGroup>
           </div>
         ),
