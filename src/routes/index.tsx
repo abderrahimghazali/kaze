@@ -61,7 +61,37 @@ function HomePage() {
         <Button variant="secondary" size="lg" icon={Icons.copy}>npx kazeui init</Button>
       </div>
 
-      {/* Quick Start */}
+      {/* Installation */}
+      <div style={{ marginBottom: 32 }}>
+        <h2 style={{
+          fontFamily: 'var(--kaze-font-mono)',
+          fontSize: 11,
+          fontWeight: 500,
+          color: tokens.colors.textTertiary,
+          letterSpacing: '0.06em',
+          textTransform: 'uppercase',
+          marginBottom: 12,
+        }}>
+          Installation
+        </h2>
+        <pre style={{
+          fontFamily: 'var(--kaze-font-mono)',
+          fontSize: 13,
+          lineHeight: 1.7,
+          color: tokens.colors.textSecondary,
+          background: tokens.colors.surface,
+          border: `1px solid ${tokens.colors.border}`,
+          borderRadius: 'var(--kaze-radius-md)',
+          padding: '14px 16px',
+          margin: 0,
+          overflow: 'auto',
+        }}>
+{`npx kazeui-cli init
+npx kazeui-cli add button card avatar`}
+        </pre>
+      </div>
+
+      {/* Usage */}
       <div style={{ marginBottom: 48 }}>
         <h2 style={{
           fontFamily: 'var(--kaze-font-mono)',
@@ -72,11 +102,9 @@ function HomePage() {
           textTransform: 'uppercase',
           marginBottom: 12,
         }}>
-          Quick Start
+          Usage
         </h2>
-        <CodeBlock language="bash" code={`npm install kazeui
-
-import { Button } from "kazeui"
+        <CodeBlock language="tsx" code={`import { Button } from "@/components/ui/button"
 
 <Button variant="primary" icon={<Star />}>
   Star repo

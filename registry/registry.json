@@ -33,6 +33,13 @@
       "dependencies": [],
       "registryDependencies": []
     },
+    "checkbox": {
+      "name": "Checkbox",
+      "description": "Animated checkmark with label and disabled state",
+      "files": ["checkbox.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
     "button": {
       "name": "Button",
       "description": "Five variants, three sizes, icon composable",
@@ -58,6 +65,13 @@
       "name": "Dialog",
       "description": "Modal overlay with scale-in animation",
       "files": ["dialog.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    "radio-group": {
+      "name": "RadioGroup",
+      "description": "Single-select radio buttons with animated dot indicator",
+      "files": ["radio-group.tsx"],
       "dependencies": [],
       "registryDependencies": []
     },

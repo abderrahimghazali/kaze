@@ -1,5 +1,5 @@
 {
-  "name": "kazeui",
+  "name": "kazeui-cli",
   "version": "0.1.0",
   "description": "Add KazeUI components to your project",
   "type": "module",

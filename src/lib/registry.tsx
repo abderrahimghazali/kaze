@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { tokens } from '@/lib/tokens'
 import { Icons } from '@/lib/icons'
 import {
-  Button, Input, Badge, Toggle, Accordion, Card,
+  Button, Input, Badge, Toggle, Checkbox, RadioGroup, Accordion, Card,
   Tabs, Avatar, AvatarGroup, Dialog, Separator, CodeBlock,
 } from '@/components/ui'
 
@@ -175,6 +175,35 @@ export const registry: Record<string, Entry> = {
     props: [
       { name: 'variant', type: '"default" | "success" | "destructive" | "info" | "warning" | "outline"', default: '"default"' },
       { name: 'children', type: 'ReactNode', default: '—' },
+    ],
+  },
+
+  checkbox: {
+    name: 'Checkbox',
+    description: 'An animated checkbox with a checkmark that scales in on toggle. Supports labels and disabled state.',
+    examples: [
+      {
+        title: 'States',
+        direction: 'column',
+        content: (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%' }}>
+            <Checkbox label="Accept terms and conditions" />
+            <Checkbox label="Subscribe to newsletter" defaultChecked />
+            <Checkbox label="Disabled unchecked" disabled />
+            <Checkbox label="Disabled checked" defaultChecked disabled />
+          </div>
+        ),
+      },
+    ],
+    code: `import { Checkbox } from "kazeui"
+
+<Checkbox label="Accept terms" />
+<Checkbox label="Subscribed" defaultChecked />
+<Checkbox label="Disabled" disabled />`,
+    props: [
+      { name: 'defaultChecked', type: 'boolean', default: 'false' },
+      { name: 'label', type: 'string', default: '—' },
+      { name: 'disabled', type: 'boolean', default: 'false' },
     ],
   },
 
@@ -363,6 +392,60 @@ const [open, setOpen] = useState(false)
       { name: 'placeholder', type: 'string', default: '—' },
       { name: 'icon', type: 'ReactNode', default: '—' },
       { name: 'type', type: 'string', default: '"text"' },
+      { name: 'disabled', type: 'boolean', default: 'false' },
+    ],
+  },
+
+  'radio-group': {
+    name: 'RadioGroup',
+    description: 'A single-select radio group with an animated dot indicator. Supports default selection and disabled state.',
+    examples: [
+      {
+        title: 'Default',
+        direction: 'column',
+        content: (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 24, width: '100%' }}>
+            <RadioGroup
+              defaultValue="comfortable"
+              options={[
+                { value: 'compact', label: 'Compact' },
+                { value: 'comfortable', label: 'Comfortable' },
+                { value: 'spacious', label: 'Spacious' },
+              ]}
+            />
+          </div>
+        ),
+      },
+      {
+        title: 'Disabled',
+        direction: 'column',
+        content: (
+          <RadioGroup
+            disabled
+            defaultValue="light"
+            options={[
+              { value: 'light', label: 'Light' },
+              { value: 'dark', label: 'Dark' },
+              { value: 'system', label: 'System' },
+            ]}
+          />
+        ),
+      },
+    ],
+    code: `import { RadioGroup } from "kazeui"
+
+<RadioGroup
+  defaultValue="comfortable"
+  options={[
+    { value: "compact", label: "Compact" },
+    { value: "comfortable", label: "Comfortable" },
+    { value: "spacious", label: "Spacious" },
+  ]}
+/>`,
+    props: [
+      { name: 'options', type: '{ value: string; label: string }[]', default: '—' },
+      { name: 'defaultValue', type: 'string', default: '—' },
+      { name: 'name', type: 'string', default: '—' },
       { name: 'disabled', type: 'boolean', default: 'false' },
     ],
   },
