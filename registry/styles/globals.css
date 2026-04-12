@@ -70,6 +70,15 @@
   --kaze-code-border: #1C1917;
 }
 
+.kaze-btn-group > button {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.kaze-btn-group > button:not(:last-child) {
+  border-right: 1px solid var(--kaze-border) !important;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }

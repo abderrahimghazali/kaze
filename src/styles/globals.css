@@ -85,6 +85,15 @@ body {
   line-height: 1.5;
 }
 
+.kaze-btn-group > button {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.kaze-btn-group > button:not(:last-child) {
+  border-right: 1px solid var(--kaze-border) !important;
+}
+
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
