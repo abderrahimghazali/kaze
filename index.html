@@ -25,6 +25,108 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon-light.svg" id="favicon" />
+
+    <!-- JSON-LD: WebSite + SearchAction (sitelinks search box) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "KazeUI",
+      "url": "https://kazeui.vercel.app",
+      "description": "A minimal, composable design system for React. Copy-paste components with clean defaults, dark mode, and zero runtime.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://kazeui.vercel.app/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- JSON-LD: SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "KazeUI",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any",
+      "url": "https://kazeui.vercel.app",
+      "author": {
+        "@type": "Person",
+        "name": "Abderrahim Ghazali",
+        "url": "https://github.com/abderrahimghazali"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "softwareVersion": "0.2.0",
+      "license": "https://opensource.org/licenses/MIT"
+    }
+    </script>
+
+    <!-- JSON-LD: SiteNavigationElement (sitelinks) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SiteNavigationElement",
+          "name": "Introduction",
+          "url": "https://kazeui.vercel.app/"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "name": "Theme Switcher",
+          "url": "https://kazeui.vercel.app/theme"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "name": "Button",
+          "url": "https://kazeui.vercel.app/components/button"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "name": "Dialog",
+          "url": "https://kazeui.vercel.app/components/dialog"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "name": "Table",
+          "url": "https://kazeui.vercel.app/components/table"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "name": "Avatar",
+          "url": "https://kazeui.vercel.app/components/avatar"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "name": "Hero Block",
+          "url": "https://kazeui.vercel.app/blocks/hero"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "name": "Pricing Block",
+          "url": "https://kazeui.vercel.app/blocks/pricing"
+        }
+      ]
+    }
+    </script>
+
+    <!-- JSON-LD: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://kazeui.vercel.app/" },
+        { "@type": "ListItem", "position": 2, "name": "Components", "item": "https://kazeui.vercel.app/components/button" },
+        { "@type": "ListItem", "position": 3, "name": "Blocks", "item": "https://kazeui.vercel.app/blocks/hero" }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
