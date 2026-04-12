@@ -43,33 +43,6 @@ npm run dev
 
 Open [http://localhost:5173](http://localhost:5173).
 
-## Design Tokens
-
-All tokens are CSS custom properties. Override at `:root` to theme the entire system:
-
-```css
-:root {
-  --kaze-accent: #2563EB;      /* swap stone → blue */
-  --kaze-bg: #FAFAF9;          /* page background */
-  --kaze-surface: #FFFFFF;     /* card/component surface */
-  --kaze-border: #E8E6E3;      /* borders */
-  --kaze-text: #1C1917;        /* primary text */
-  --kaze-radius-sm: 6px;       /* small radius */
-  --kaze-radius-lg: 12px;      /* large radius */
-  --kaze-transition: 160ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-```
-
-## Typography
-
-- **Sans** — DM Sans (UI, body)
-- **Serif** — Newsreader (headings, display)
-- **Mono** — IBM Plex Mono (code, labels)
-
-## Deploy
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/abderrahimghazali/kaze)
-
 ## License
 
 MIT — Built by [Abderrahim](https://github.com/abderrahimghazali)
