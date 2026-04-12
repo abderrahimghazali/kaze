@@ -101,16 +101,30 @@ export function Button({
 }
 
 // ─── BUTTON GROUP ───
-export function ButtonGroup({ children }: { children: React.ReactNode }) {
+export function ButtonGroup({ items, size = 'md' }: {
+  items: { label: string; icon?: React.ReactNode; onClick?: () => void }[]
+  size?: 'sm' | 'md' | 'lg'
+}) {
+  const s = { sm: { fontSize: 13, padding: '6px 12px' }, md: { fontSize: 14, padding: '8px 14px' }, lg: { fontSize: 15, padding: '10px 18px' } }
   return (
-    <div className="kaze-btn-group" style={{
-      display: 'inline-flex',
-      borderRadius: 'var(--kaze-radius-sm)',
-      overflow: 'hidden',
-      border: `1px solid ${tokens.colors.border}`,
-      boxShadow: 'var(--kaze-shadow-sm)',
-    }}>
-      {children}
+    <div style={{ display: 'inline-flex', width: 'fit-content', borderRadius: 'var(--kaze-radius-sm)', border: `1px solid ${tokens.colors.border}`, background: tokens.colors.surface }}>
+      {items.map((item, i) => (
+        <button key={i} onClick={item.onClick}
+          style={{
+            fontFamily: 'var(--kaze-font-sans)', fontWeight: 500, ...s[size],
+            display: 'flex', alignItems: 'center', gap: 6,
+            background: 'transparent', color: tokens.colors.text,
+            border: 'none', borderRight: i < items.length - 1 ? `1px solid ${tokens.colors.border}` : undefined,
+            cursor: 'pointer', letterSpacing: '-0.01em', lineHeight: 1, outline: 'none',
+            transition: 'background var(--kaze-transition)',
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = tokens.colors.surfaceHover }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
+        >
+          {item.icon && <span style={{ display: 'flex', alignItems: 'center' }}>{item.icon}</span>}
+          {item.label}
+        </button>
+      ))}
     </div>
   )
 }
@@ -750,6 +764,339 @@ export function CodeBlock({ code, language = 'jsx' }: { code: string; language?:
       <pre style={{ padding: '14px 16px', margin: 0, overflow: 'auto', fontFamily: 'var(--kaze-font-mono)', fontSize: 13, lineHeight: 1.6, color: SYN.text }}>
         <code>{highlight(code)}</code>
       </pre>
+    </div>
+  )
+}
+
+// ─── TABLE ───
+export function Table({ columns, rows, striped = false }: {
+  columns: { key: string; label: string; align?: 'left' | 'center' | 'right' }[]
+  rows: Record<string, React.ReactNode>[]
+  striped?: boolean
+}) {
+  return (
+    <div style={{
+      border: `1px solid ${tokens.colors.border}`,
+      borderRadius: 'var(--kaze-radius-md)',
+      overflow: 'hidden',
+    }}>
+      <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--kaze-font-sans)' }}>
+        <thead>
+          <tr style={{ borderBottom: `1px solid ${tokens.colors.border}`, background: tokens.colors.surfaceHover }}>
+            {columns.map((col) => (
+              <th key={col.key} style={{
+                textAlign: col.align || 'left',
+                padding: '10px 16px',
+                fontSize: 12,
+                fontWeight: 600,
+                color: tokens.colors.textSecondary,
+                letterSpacing: '0.02em',
+              }}>
+                {col.label}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, i) => (
+            <tr key={i} style={{
+              borderBottom: i < rows.length - 1 ? `1px solid ${tokens.colors.border}` : 'none',
+              background: striped && i % 2 === 1 ? tokens.colors.surfaceHover : tokens.colors.surface,
+              transition: 'background var(--kaze-transition)',
+            }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = tokens.colors.surfaceHover }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = striped && i % 2 === 1 ? tokens.colors.surfaceHover : tokens.colors.surface }}
+            >
+              {columns.map((col) => (
+                <td key={col.key} style={{
+                  textAlign: col.align || 'left',
+                  padding: '10px 16px',
+                  fontSize: 14,
+                  color: tokens.colors.text,
+                  letterSpacing: '-0.01em',
+                }}>
+                  {row[col.key]}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+// ─── DATA TABLE ───
+export function DataTable({ columns, data, pageSize = 5, searchable = true, selectable = false }: {
+  columns: { key: string; label: string; align?: 'left' | 'center' | 'right'; sortable?: boolean }[]
+  data: Record<string, React.ReactNode>[]
+  pageSize?: number
+  searchable?: boolean
+  selectable?: boolean
+}) {
+  const [query, setQuery] = useState('')
+  const [sort, setSort] = useState<{ key: string; dir: 'asc' | 'desc' } | null>(null)
+  const [page, setPage] = useState(0)
+  const [selected, setSelected] = useState<Set<number>>(new Set())
+
+  // Filter
+  const filtered = query
+    ? data.filter((row) => columns.some((col) => String(row[col.key] ?? '').toLowerCase().includes(query.toLowerCase())))
+    : data
+
+  // Sort
+  const sorted = sort
+    ? [...filtered].sort((a, b) => {
+        const av = String(a[sort.key] ?? '')
+        const bv = String(b[sort.key] ?? '')
+        return sort.dir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av)
+      })
+    : filtered
+
+  // Paginate
+  const totalPages = Math.ceil(sorted.length / pageSize)
+  const paged = sorted.slice(page * pageSize, (page + 1) * pageSize)
+
+  const toggleSort = (key: string) => {
+    if (sort?.key === key) {
+      setSort(sort.dir === 'asc' ? { key, dir: 'desc' } : null)
+    } else {
+      setSort({ key, dir: 'asc' })
+    }
+    setPage(0)
+  }
+
+  const allSelected = paged.length > 0 && paged.every((_, i) => selected.has(page * pageSize + i))
+  const toggleAll = () => {
+    const next = new Set(selected)
+    paged.forEach((_, i) => {
+      const idx = page * pageSize + i
+      if (allSelected) next.delete(idx); else next.add(idx)
+    })
+    setSelected(next)
+  }
+  const toggleRow = (idx: number) => {
+    const next = new Set(selected)
+    if (next.has(idx)) next.delete(idx); else next.add(idx)
+    setSelected(next)
+  }
+
+  const thStyle: React.CSSProperties = {
+    textAlign: 'left', padding: '10px 16px', fontSize: 12, fontWeight: 600,
+    color: tokens.colors.textSecondary, letterSpacing: '0.02em', whiteSpace: 'nowrap',
+  }
+
+  return (
+    <div style={{ border: `1px solid ${tokens.colors.border}`, borderRadius: 'var(--kaze-radius-md)', overflow: 'hidden' }}>
+      {/* Toolbar */}
+      {(searchable || selectable) && (
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '10px 16px', borderBottom: `1px solid ${tokens.colors.border}`,
+          background: tokens.colors.surface,
+        }}>
+          {searchable ? (
+            <input
+              placeholder="Search..."
+              value={query}
+              onChange={(e) => { setQuery(e.target.value); setPage(0) }}
+              style={{
+                fontFamily: 'var(--kaze-font-sans)', fontSize: 13, height: 32,
+                padding: '0 10px', border: `1px solid ${tokens.colors.border}`,
+                borderRadius: 'var(--kaze-radius-sm)', background: tokens.colors.surface,
+                color: tokens.colors.text, outline: 'none', width: 220,
+                transition: 'border-color var(--kaze-transition)',
+              }}
+              onFocus={(e) => { e.currentTarget.style.borderColor = tokens.colors.borderStrong }}
+              onBlur={(e) => { e.currentTarget.style.borderColor = tokens.colors.border }}
+            />
+          ) : <div />}
+          <span style={{ fontSize: 12, color: tokens.colors.textTertiary, fontFamily: 'var(--kaze-font-mono)' }}>
+            {selected.size > 0 ? `${selected.size} selected · ` : ''}{sorted.length} row{sorted.length !== 1 ? 's' : ''}
+          </span>
+        </div>
+      )}
+
+      {/* Table */}
+      <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--kaze-font-sans)' }}>
+        <thead>
+          <tr style={{ borderBottom: `1px solid ${tokens.colors.border}`, background: tokens.colors.surfaceHover }}>
+            {selectable && (
+              <th style={{ ...thStyle, width: 40, textAlign: 'center', padding: '10px 12px' }}>
+                <input type="checkbox" checked={allSelected} onChange={toggleAll}
+                  style={{ width: 14, height: 14, cursor: 'pointer', accentColor: tokens.colors.accent }} />
+              </th>
+            )}
+            {columns.map((col) => (
+              <th key={col.key}
+                onClick={() => col.sortable !== false && toggleSort(col.key)}
+                style={{
+                  ...thStyle, textAlign: col.align || 'left',
+                  cursor: col.sortable !== false ? 'pointer' : 'default',
+                  userSelect: 'none',
+                }}>
+                {col.label}
+                {sort?.key === col.key && (
+                  <span style={{ marginLeft: 4, fontSize: 10 }}>{sort.dir === 'asc' ? '▲' : '▼'}</span>
+                )}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {paged.length === 0 && (
+            <tr>
+              <td colSpan={columns.length + (selectable ? 1 : 0)}
+                style={{ padding: '32px 16px', textAlign: 'center', fontSize: 14, color: tokens.colors.textTertiary }}>
+                No results found.
+              </td>
+            </tr>
+          )}
+          {paged.map((row, i) => {
+            const globalIdx = page * pageSize + i
+            const isSelected = selected.has(globalIdx)
+            return (
+              <tr key={globalIdx}
+                style={{
+                  borderBottom: i < paged.length - 1 ? `1px solid ${tokens.colors.border}` : 'none',
+                  background: isSelected ? tokens.colors.surfaceActive : tokens.colors.surface,
+                  transition: 'background var(--kaze-transition)',
+                }}
+                onMouseEnter={(e) => { if (!isSelected) e.currentTarget.style.background = tokens.colors.surfaceHover }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = isSelected ? tokens.colors.surfaceActive : tokens.colors.surface }}
+              >
+                {selectable && (
+                  <td style={{ padding: '10px 12px', textAlign: 'center' }}>
+                    <input type="checkbox" checked={isSelected} onChange={() => toggleRow(globalIdx)}
+                      style={{ width: 14, height: 14, cursor: 'pointer', accentColor: tokens.colors.accent }} />
+                  </td>
+                )}
+                {columns.map((col) => (
+                  <td key={col.key} style={{
+                    textAlign: col.align || 'left', padding: '10px 16px',
+                    fontSize: 14, color: tokens.colors.text, letterSpacing: '-0.01em',
+                  }}>
+                    {row[col.key]}
+                  </td>
+                ))}
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '10px 16px', borderTop: `1px solid ${tokens.colors.border}`,
+          background: tokens.colors.surface,
+        }}>
+          <span style={{ fontSize: 12, color: tokens.colors.textTertiary, fontFamily: 'var(--kaze-font-mono)' }}>
+            {page * pageSize + 1}–{Math.min((page + 1) * pageSize, sorted.length)} of {sorted.length}
+          </span>
+          <div style={{ display: 'flex', gap: 4 }}>
+            <button disabled={page === 0} onClick={() => setPage(page - 1)}
+              style={{
+                fontFamily: 'var(--kaze-font-sans)', fontSize: 13, padding: '4px 10px',
+                border: `1px solid ${tokens.colors.border}`, borderRadius: 'var(--kaze-radius-sm)',
+                background: tokens.colors.surface, color: tokens.colors.text,
+                cursor: page === 0 ? 'not-allowed' : 'pointer', opacity: page === 0 ? 0.4 : 1,
+                transition: 'all var(--kaze-transition)', outline: 'none',
+              }}
+              onMouseEnter={(e) => { if (page > 0) e.currentTarget.style.background = tokens.colors.surfaceHover }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = tokens.colors.surface }}
+            >Prev</button>
+            <button disabled={page >= totalPages - 1} onClick={() => setPage(page + 1)}
+              style={{
+                fontFamily: 'var(--kaze-font-sans)', fontSize: 13, padding: '4px 10px',
+                border: `1px solid ${tokens.colors.border}`, borderRadius: 'var(--kaze-radius-sm)',
+                background: tokens.colors.surface, color: tokens.colors.text,
+                cursor: page >= totalPages - 1 ? 'not-allowed' : 'pointer', opacity: page >= totalPages - 1 ? 0.4 : 1,
+                transition: 'all var(--kaze-transition)', outline: 'none',
+              }}
+              onMouseEnter={(e) => { if (page < totalPages - 1) e.currentTarget.style.background = tokens.colors.surfaceHover }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = tokens.colors.surface }}
+            >Next</button>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ─── DROPDOWN ───
+export function Dropdown({ trigger, items, align = 'left' }: {
+  trigger: React.ReactNode
+  items: ({ label: string; icon?: React.ReactNode; onClick?: () => void; destructive?: boolean } | 'separator')[]
+  align?: 'left' | 'right'
+}) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!open) return
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [open])
+
+  return (
+    <div ref={ref} style={{ position: 'relative', display: 'inline-flex' }}>
+      <div onClick={() => setOpen(!open)} style={{ cursor: 'pointer', display: 'inline-flex' }}>
+        {trigger}
+      </div>
+      {open && (
+        <div style={{
+          position: 'absolute',
+          top: 'calc(100% + 4px)',
+          [align === 'right' ? 'right' : 'left']: 0,
+          minWidth: 180,
+          background: tokens.colors.surface,
+          border: `1px solid ${tokens.colors.border}`,
+          borderRadius: 'var(--kaze-radius-md)',
+          boxShadow: 'var(--kaze-shadow-lg)',
+          padding: '4px',
+          zIndex: 50,
+          animation: 'scaleIn 120ms cubic-bezier(0.22, 1, 0.36, 1)',
+        }}>
+          {items.map((item, i) =>
+            item === 'separator' ? (
+              <div key={i} style={{ height: 1, background: tokens.colors.border, margin: '4px 0' }} />
+            ) : (
+              <button
+                key={i}
+                onClick={() => { item.onClick?.(); setOpen(false) }}
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  padding: '8px 10px',
+                  border: 'none',
+                  background: 'transparent',
+                  borderRadius: 'var(--kaze-radius-sm)',
+                  fontFamily: 'var(--kaze-font-sans)',
+                  fontSize: 14,
+                  color: item.destructive ? tokens.colors.destructive : tokens.colors.text,
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                  letterSpacing: '-0.01em',
+                  outline: 'none',
+                  transition: 'background var(--kaze-transition)',
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = item.destructive ? tokens.colors.destructiveLight : tokens.colors.surfaceHover }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
+              >
+                {item.icon && <span style={{ display: 'flex', alignItems: 'center', color: item.destructive ? tokens.colors.destructive : tokens.colors.textTertiary }}>{item.icon}</span>}
+                {item.label}
+              </button>
+            )
+          )}
+        </div>
+      )}
     </div>
   )
 }

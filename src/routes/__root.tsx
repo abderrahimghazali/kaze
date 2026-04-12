@@ -22,9 +22,11 @@ const searchItems = [
   { name: 'Checkbox', href: '/components/checkbox' },
   { name: 'Code Block', href: '/components/code-block' },
   { name: 'Dialog', href: '/components/dialog' },
+  { name: 'Dropdown', href: '/components/dropdown' },
   { name: 'Input', href: '/components/input' },
   { name: 'Radio Group', href: '/components/radio-group' },
   { name: 'Separator', href: '/components/separator' },
+  { name: 'Table', href: '/components/table' },
   { name: 'Tabs', href: '/components/tabs' },
   { name: 'Toggle', href: '/components/toggle' },
 ]
@@ -140,6 +142,8 @@ function RootLayout() {
     const next = !dark
     setDark(next)
     document.documentElement.setAttribute('data-theme', next ? 'dark' : 'light')
+    const favicon = document.getElementById('favicon') as HTMLLinkElement | null
+    if (favicon) favicon.href = next ? '/favicon-dark.svg' : '/favicon-light.svg'
   }
 
   // Cmd+K shortcut

@@ -52,7 +52,7 @@
       "description": "Joined button strip with shared border",
       "files": ["button-group.tsx"],
       "dependencies": [],
-      "registryDependencies": ["button"]
+      "registryDependencies": []
     },
     "card": {
       "name": "Card",
@@ -65,6 +65,13 @@
       "name": "CodeBlock",
       "description": "Syntax-highlighted code display with copy button",
       "files": ["code-block.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    "dropdown": {
+      "name": "Dropdown",
+      "description": "Click-triggered menu with items, icons, separators, and destructive actions",
+      "files": ["dropdown.tsx"],
       "dependencies": [],
       "registryDependencies": []
     },
@@ -86,6 +93,20 @@
       "name": "Input",
       "description": "Focus rings, icon slots, optical alignment",
       "files": ["input.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    "table": {
+      "name": "Table",
+      "description": "Data table with columns, row hover, and optional striped rows",
+      "files": ["table.tsx"],
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    "data-table": {
+      "name": "DataTable",
+      "description": "Interactive table with search, sorting, pagination, and row selection",
+      "files": ["data-table.tsx"],
       "dependencies": [],
       "registryDependencies": []
     },

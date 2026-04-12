@@ -3,7 +3,7 @@ import { tokens } from '@/lib/tokens'
 import { Icons } from '@/lib/icons'
 import {
   Button, ButtonGroup, Input, Badge, Toggle, Checkbox, RadioGroup, Accordion, Card,
-  Tabs, Avatar, AvatarGroup, Dialog, Separator, CodeBlock,
+  Tabs, Avatar, AvatarGroup, Dropdown, Dialog, Table, DataTable, Separator, CodeBlock,
 } from '@/components/ui'
 
 type PropDef = { name: string; type: string; default: string }
@@ -248,16 +248,21 @@ export const registry: Record<string, Entry> = {
         title: 'Button Group',
         content: (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            <ButtonGroup>
-              <Button variant="outline">Day</Button>
-              <Button variant="outline">Week</Button>
-              <Button variant="outline">Month</Button>
-            </ButtonGroup>
-            <ButtonGroup>
-              <Button variant="outline" icon={Icons.star}>Star</Button>
-              <Button variant="outline" icon={Icons.copy}>Fork</Button>
-              <Button variant="outline" icon={Icons.search}>Watch</Button>
-            </ButtonGroup>
+            <ButtonGroup items={[
+              { label: 'Day' },
+              { label: 'Week' },
+              { label: 'Month' },
+            ]} />
+            <ButtonGroup items={[
+              { label: 'Star', icon: Icons.star },
+              { label: 'Fork', icon: Icons.copy },
+              { label: 'Watch', icon: Icons.search },
+            ]} />
+            <ButtonGroup size="sm" items={[
+              { label: 'Left' },
+              { label: 'Center' },
+              { label: 'Right' },
+            ]} />
           </div>
         ),
       },
@@ -268,11 +273,16 @@ export const registry: Record<string, Entry> = {
   Star repo
 </Button>
 
-<ButtonGroup>
-  <Button variant="outline">Day</Button>
-  <Button variant="outline">Week</Button>
-  <Button variant="outline">Month</Button>
-</ButtonGroup>`,
+<ButtonGroup items={[
+  { label: "Day" },
+  { label: "Week" },
+  { label: "Month" },
+]} />
+
+<ButtonGroup items={[
+  { label: "Star", icon: <Star /> },
+  { label: "Fork", icon: <Copy /> },
+]} />`,
     props: [
       { name: 'variant', type: '"primary" | "secondary" | "outline" | "ghost" | "destructive"', default: '"primary"' },
       { name: 'size', type: '"sm" | "md" | "lg"', default: '"md"' },
@@ -390,6 +400,75 @@ const [open, setOpen] = useState(false)
     ],
   },
 
+  dropdown: {
+    name: 'Dropdown',
+    description: 'A click-triggered popover menu with items, icons, separators, and destructive actions. Closes on outside click.',
+    examples: [
+      {
+        title: 'Default',
+        content: (
+          <div style={{ display: 'flex', gap: 12 }}>
+            <Dropdown
+              trigger={<Button variant="outline">Options</Button>}
+              items={[
+                { label: 'Edit', icon: Icons.copy },
+                { label: 'Duplicate', icon: Icons.copy },
+                'separator',
+                { label: 'Delete', icon: Icons.x, destructive: true },
+              ]}
+            />
+            <Dropdown
+              trigger={<Button variant="secondary">Account</Button>}
+              items={[
+                { label: 'Profile' },
+                { label: 'Settings' },
+                { label: 'Billing' },
+                'separator',
+                { label: 'Sign out', destructive: true },
+              ]}
+            />
+          </div>
+        ),
+      },
+      {
+        title: 'Right Aligned',
+        content: (
+          <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
+            <Dropdown
+              align="right"
+              trigger={<Button variant="ghost" icon={Icons.chevronDown}>More</Button>}
+              items={[
+                { label: 'Export as CSV' },
+                { label: 'Export as JSON' },
+                'separator',
+                { label: 'Print' },
+              ]}
+            />
+          </div>
+        ),
+      },
+    ],
+    code: `import { Dropdown } from "kazeui"
+
+<Dropdown
+  trigger={<Button variant="outline">Options</Button>}
+  items={[
+    { label: "Edit", icon: <Edit /> },
+    { label: "Duplicate", icon: <Copy /> },
+    "separator",
+    { label: "Delete", icon: <Trash />, destructive: true },
+  ]}
+/>
+
+{/* Right-aligned */}
+<Dropdown align="right" trigger={...} items={[...]} />`,
+    props: [
+      { name: 'trigger', type: 'ReactNode', default: '—' },
+      { name: 'items', type: '({ label, icon?, onClick?, destructive? } | "separator")[]', default: '—' },
+      { name: 'align', type: '"left" | "right"', default: '"left"' },
+    ],
+  },
+
   input: {
     name: 'Input',
     description: 'A clean text input with 3px focus ring offset, optional leading icon, and disabled state. Icons sit flush left with proper optical alignment.',
@@ -497,6 +576,121 @@ const [open, setOpen] = useState(false)
 <Separator label="Section Title" />`,
     props: [
       { name: 'label', type: 'string', default: '—' },
+    ],
+  },
+
+  table: {
+    name: 'Table',
+    description: 'A data table with typed columns, row hover highlighting, and optional striped rows. Clean header styling with secondary text.',
+    examples: [
+      {
+        title: 'Default',
+        direction: 'column',
+        content: (
+          <div style={{ width: '100%' }}>
+            <Table
+              columns={[
+                { key: 'name', label: 'Name' },
+                { key: 'role', label: 'Role' },
+                { key: 'status', label: 'Status' },
+                { key: 'commits', label: 'Commits', align: 'right' },
+              ]}
+              rows={[
+                { name: 'Abderrahim G', role: 'Maintainer', status: <Badge variant="success">Active</Badge>, commits: '1,284' },
+                { name: 'Sarah Chen', role: 'Contributor', status: <Badge variant="success">Active</Badge>, commits: '847' },
+                { name: 'Dan Abramov', role: 'Contributor', status: <Badge variant="warning">Away</Badge>, commits: '423' },
+                { name: 'Evan You', role: 'Reviewer', status: <Badge variant="outline">Inactive</Badge>, commits: '156' },
+              ]}
+            />
+          </div>
+        ),
+      },
+      {
+        title: 'Striped',
+        direction: 'column',
+        content: (
+          <div style={{ width: '100%' }}>
+            <Table
+              striped
+              columns={[
+                { key: 'component', label: 'Component' },
+                { key: 'size', label: 'Size', align: 'right' },
+                { key: 'deps', label: 'Dependencies', align: 'right' },
+              ]}
+              rows={[
+                { component: 'Button', size: '1.2kb', deps: '0' },
+                { component: 'Dialog', size: '1.8kb', deps: '1' },
+                { component: 'Accordion', size: '1.4kb', deps: '0' },
+                { component: 'Table', size: '1.1kb', deps: '0' },
+                { component: 'Avatar', size: '1.6kb', deps: '0' },
+              ]}
+            />
+          </div>
+        ),
+      },
+      {
+        title: 'DataTable — search, sort, pagination, selection',
+        direction: 'column',
+        content: (
+          <div style={{ width: '100%' }}>
+            <DataTable
+              selectable
+              pageSize={4}
+              columns={[
+                { key: 'name', label: 'Name' },
+                { key: 'email', label: 'Email' },
+                { key: 'role', label: 'Role' },
+                { key: 'status', label: 'Status' },
+              ]}
+              data={[
+                { name: 'Abderrahim G', email: 'abderrahim@kaze.dev', role: 'Maintainer', status: <Badge variant="success">Active</Badge> },
+                { name: 'Sarah Chen', email: 'sarah@kaze.dev', role: 'Engineer', status: <Badge variant="success">Active</Badge> },
+                { name: 'Dan Abramov', email: 'dan@kaze.dev', role: 'Contributor', status: <Badge variant="warning">Away</Badge> },
+                { name: 'Evan You', email: 'evan@kaze.dev', role: 'Reviewer', status: <Badge variant="outline">Inactive</Badge> },
+                { name: 'Ryan Dahl', email: 'ryan@kaze.dev', role: 'Contributor', status: <Badge variant="success">Active</Badge> },
+                { name: 'Rich Harris', email: 'rich@kaze.dev', role: 'Contributor', status: <Badge variant="warning">Away</Badge> },
+                { name: 'Guillermo Rauch', email: 'guillermo@kaze.dev', role: 'Advisor', status: <Badge variant="info">Review</Badge> },
+                { name: 'Theo Browne', email: 'theo@kaze.dev', role: 'Contributor', status: <Badge variant="success">Active</Badge> },
+              ]}
+            />
+          </div>
+        ),
+      },
+    ],
+    code: `import { Table, DataTable } from "kazeui"
+
+{/* Simple table */}
+<Table
+  columns={[
+    { key: "name", label: "Name" },
+    { key: "role", label: "Role" },
+  ]}
+  rows={[
+    { name: "Sarah", role: "Engineer" },
+    { name: "Dan", role: "Reviewer" },
+  ]}
+  striped
+/>
+
+{/* Full data table */}
+<DataTable
+  selectable
+  searchable
+  pageSize={5}
+  columns={[
+    { key: "name", label: "Name" },
+    { key: "email", label: "Email" },
+    { key: "status", label: "Status" },
+  ]}
+  data={rows}
+/>`,
+    props: [
+      { name: 'columns', type: '{ key: string; label: string; align?: "left" | "center" | "right" }[]', default: '—' },
+      { name: 'rows / data', type: 'Record<string, ReactNode>[]', default: '—' },
+      { name: 'striped', type: 'boolean', default: 'false' },
+      { name: 'searchable', type: 'boolean', default: 'true' },
+      { name: 'selectable', type: 'boolean', default: 'false' },
+      { name: 'pageSize', type: 'number', default: '5' },
     ],
   },
 
