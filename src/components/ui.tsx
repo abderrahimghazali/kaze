@@ -206,7 +206,7 @@ export function Toggle({
         <span style={{
           position: 'absolute', top: '50%', left: checked ? s.tx + 2 : 2,
           transform: 'translateY(-50%)', width: s.thumb, height: s.thumb,
-          borderRadius: '50%', background: '#fff',
+          borderRadius: '50%', background: checked ? tokens.colors.accentText : tokens.colors.surface,
           boxShadow: '0 1px 3px rgba(0,0,0,0.15)', transition: 'left var(--kaze-transition)',
         }} />
       </button>
@@ -555,6 +555,73 @@ export function Separator({ label }: { label?: string }) {
   )
 }
 
+// ─── SYNTAX HIGHLIGHTING ───
+const SYN = {
+  keyword: '#C678DD',
+  string: '#98C379',
+  tag: '#E06C75',
+  attr: '#D19A66',
+  comment: '#5C6370',
+  func: '#61AFEF',
+  punct: '#ABB2BF',
+  text: '#E7E5E4',
+}
+
+function highlight(code: string): React.ReactNode[] {
+  const rules: [RegExp, string][] = [
+    [/(\/\/.*$|\/\*[\s\S]*?\*\/|{\/\*[\s\S]*?\*\/})/gm, SYN.comment],
+    [/("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`)/g, SYN.string],
+    [/\b(import|export|from|const|let|var|function|return|if|else|default|new|typeof|void|null|undefined|true|false|async|await|class|extends|interface|type)\b/g, SYN.keyword],
+    [/(<\/?)([\w.]+)/g, '_tag'],
+    [/\b(useState|useEffect|useRef|console)\b/g, SYN.func],
+    [/([\w-]+)(=)/g, '_attr'],
+  ]
+
+  type Segment = { text: string; color?: string; start: number }
+  const segments: Segment[] = []
+
+  for (const [re, color] of rules) {
+    let m: RegExpExecArray | null
+    const r = new RegExp(re.source, re.flags)
+    while ((m = r.exec(code)) !== null) {
+      if (color === '_tag') {
+        segments.push({ text: m[1], color: SYN.punct, start: m.index })
+        segments.push({ text: m[2], color: SYN.tag, start: m.index + m[1].length })
+      } else if (color === '_attr') {
+        segments.push({ text: m[1], color: SYN.attr, start: m.index })
+        segments.push({ text: m[2], color: SYN.punct, start: m.index + m[1].length })
+      } else {
+        segments.push({ text: m[0], color, start: m.index })
+      }
+    }
+  }
+
+  segments.sort((a, b) => a.start - b.start)
+
+  // Remove overlapping segments — first match wins
+  const used: boolean[] = new Array(code.length).fill(false)
+  const clean: Segment[] = []
+  for (const seg of segments) {
+    const end = seg.start + seg.text.length
+    let overlap = false
+    for (let i = seg.start; i < end; i++) { if (used[i]) { overlap = true; break } }
+    if (overlap) continue
+    for (let i = seg.start; i < end; i++) used[i] = true
+    clean.push(seg)
+  }
+  clean.sort((a, b) => a.start - b.start)
+
+  const result: React.ReactNode[] = []
+  let cursor = 0
+  for (const seg of clean) {
+    if (seg.start > cursor) result.push(code.slice(cursor, seg.start))
+    result.push(<span key={seg.start} style={{ color: seg.color }}>{seg.text}</span>)
+    cursor = seg.start + seg.text.length
+  }
+  if (cursor < code.length) result.push(code.slice(cursor))
+  return result
+}
+
 // ─── CODE BLOCK ───
 export function CodeBlock({ code, language = 'jsx' }: { code: string; language?: string }) {
   const [copied, setCopied] = useState(false)
@@ -564,20 +631,20 @@ export function CodeBlock({ code, language = 'jsx' }: { code: string; language?:
     setTimeout(() => setCopied(false), 1500)
   }
   return (
-    <div style={{ background: '#1C1917', borderRadius: 'var(--kaze-radius-md)', overflow: 'hidden', border: '1px solid #292524' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px', borderBottom: '1px solid #292524' }}>
-        <span style={{ fontFamily: 'var(--kaze-font-mono)', fontSize: 11, color: '#78716C' }}>{language}</span>
+    <div style={{ background: 'var(--kaze-code-bg)', borderRadius: 'var(--kaze-radius-md)', overflow: 'hidden', border: '1px solid var(--kaze-code-border)' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px', borderBottom: '1px solid var(--kaze-code-border)' }}>
+        <span style={{ fontFamily: 'var(--kaze-font-mono)', fontSize: 11, color: 'var(--kaze-code-muted)' }}>{language}</span>
         <button onClick={handleCopy} style={{
           background: 'transparent', border: 'none', cursor: 'pointer',
-          color: copied ? '#4ADE80' : '#78716C', display: 'flex', alignItems: 'center',
+          color: copied ? '#4ADE80' : 'var(--kaze-code-muted)', display: 'flex', alignItems: 'center',
           gap: 4, fontSize: 11, fontFamily: 'var(--kaze-font-mono)', transition: 'color var(--kaze-transition)',
         }}>
           {copied ? Icons.check : Icons.copy}
           {copied ? 'Copied' : 'Copy'}
         </button>
       </div>
-      <pre style={{ padding: '14px 16px', margin: 0, overflow: 'auto', fontFamily: 'var(--kaze-font-mono)', fontSize: 13, lineHeight: 1.6, color: '#E7E5E4' }}>
-        <code>{code}</code>
+      <pre style={{ padding: '14px 16px', margin: 0, overflow: 'auto', fontFamily: 'var(--kaze-font-mono)', fontSize: 13, lineHeight: 1.6, color: SYN.text }}>
+        <code>{highlight(code)}</code>
       </pre>
     </div>
   )

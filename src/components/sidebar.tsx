@@ -6,6 +6,7 @@ const navSections = [
     title: 'Getting Started',
     items: [
       { name: 'Introduction', href: '/' },
+      { name: 'Theme Switcher', href: '/theme' },
     ],
   },
   {
