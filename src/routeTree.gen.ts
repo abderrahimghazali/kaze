@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ThemeRouteImport } from './routes/theme'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ComponentsSlugRouteImport } from './routes/components/$slug'
+import { Route as BlocksSlugRouteImport } from './routes/blocks/$slug'
 
 const ThemeRoute = ThemeRouteImport.update({
   id: '/theme',
@@ -28,34 +29,43 @@ const ComponentsSlugRoute = ComponentsSlugRouteImport.update({
   path: '/components/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlocksSlugRoute = BlocksSlugRouteImport.update({
+  id: '/blocks/$slug',
+  path: '/blocks/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/theme': typeof ThemeRoute
+  '/blocks/$slug': typeof BlocksSlugRoute
   '/components/$slug': typeof ComponentsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/theme': typeof ThemeRoute
+  '/blocks/$slug': typeof BlocksSlugRoute
   '/components/$slug': typeof ComponentsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/theme': typeof ThemeRoute
+  '/blocks/$slug': typeof BlocksSlugRoute
   '/components/$slug': typeof ComponentsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/theme' | '/components/$slug'
+  fullPaths: '/' | '/theme' | '/blocks/$slug' | '/components/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/theme' | '/components/$slug'
-  id: '__root__' | '/' | '/theme' | '/components/$slug'
+  to: '/' | '/theme' | '/blocks/$slug' | '/components/$slug'
+  id: '__root__' | '/' | '/theme' | '/blocks/$slug' | '/components/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ThemeRoute: typeof ThemeRoute
+  BlocksSlugRoute: typeof BlocksSlugRoute
   ComponentsSlugRoute: typeof ComponentsSlugRoute
 }
 
@@ -82,12 +92,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ComponentsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blocks/$slug': {
+      id: '/blocks/$slug'
+      path: '/blocks/$slug'
+      fullPath: '/blocks/$slug'
+      preLoaderRoute: typeof BlocksSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ThemeRoute: ThemeRoute,
+  BlocksSlugRoute: BlocksSlugRoute,
   ComponentsSlugRoute: ComponentsSlugRoute,
 }
 export const routeTree = rootRouteImport

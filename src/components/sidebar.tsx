@@ -32,6 +32,31 @@ const navSections = [
       { name: 'Toggle', href: '/components/toggle' },
     ],
   },
+  {
+    title: 'Blocks',
+    items: [
+      { name: 'Hero — Aurora', href: '/blocks/hero' },
+      { name: 'CTA — Spotlight', href: '/blocks/cta' },
+      { name: '3D Card Effect', href: '/blocks/3d-card' },
+      { name: 'Orbiting Icons', href: '/blocks/orbit' },
+      { name: 'Bento Grid', href: '/blocks/bento' },
+      { name: 'Pricing', href: '/blocks/pricing' },
+      { name: 'Feature Grid', href: '/blocks/features' },
+      { name: 'Logo Cloud', href: '/blocks/logo-cloud' },
+      { name: 'Stats', href: '/blocks/stats' },
+      { name: 'Testimonials', href: '/blocks/testimonials' },
+      { name: 'Navbar', href: '/blocks/navbar' },
+      { name: 'Footer', href: '/blocks/footer' },
+      { name: 'Terminal', href: '/blocks/terminal' },
+      { name: 'Before / After', href: '/blocks/before-after' },
+      { name: 'Magnetic Dock', href: '/blocks/dock' },
+      { name: 'Layer Stack', href: '/blocks/layer-stack' },
+      { name: 'Component Morph', href: '/blocks/morph' },
+      { name: 'Spotlight Cursor', href: '/blocks/spotlight' },
+      { name: 'Login', href: '/blocks/login' },
+      { name: 'Sign Up', href: '/blocks/signup' },
+    ],
+  },
 ]
 
 export function Sidebar() {

@@ -765,7 +765,7 @@ export function CodeBlock({ code }: { code: string; language?: string }) {
       >
         {copied ? Icons.check : Icons.copy}
       </button>
-      <pre style={{ padding: '14px 0', margin: 0, overflow: 'auto', fontFamily: 'var(--kaze-font-mono)', fontSize: 13, lineHeight: 1.7 }}>
+      <pre style={{ padding: '14px 0', margin: 0, overflow: 'auto', maxHeight: 360, fontFamily: 'var(--kaze-font-mono)', fontSize: 13, lineHeight: 1.7 }}>
         <code>
           {lines.map((line, i) => (
             <div key={i} style={{ display: 'flex' }}>
