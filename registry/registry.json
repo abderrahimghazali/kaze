@@ -47,6 +47,13 @@
       "dependencies": [],
       "registryDependencies": []
     },
+    "button-group": {
+      "name": "ButtonGroup",
+      "description": "Joined button strip with shared border",
+      "files": ["button-group.tsx"],
+      "dependencies": [],
+      "registryDependencies": ["button"]
+    },
     "card": {
       "name": "Card",
       "description": "Surface elevation with hover lift",

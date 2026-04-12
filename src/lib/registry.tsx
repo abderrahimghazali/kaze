@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { tokens } from '@/lib/tokens'
 import { Icons } from '@/lib/icons'
 import {
-  Button, Input, Badge, Toggle, Checkbox, RadioGroup, Accordion, Card,
+  Button, ButtonGroup, Input, Badge, Toggle, Checkbox, RadioGroup, Accordion, Card,
   Tabs, Avatar, AvatarGroup, Dialog, Separator, CodeBlock,
 } from '@/components/ui'
 
@@ -244,12 +244,35 @@ export const registry: Record<string, Entry> = {
           </>
         ),
       },
+      {
+        title: 'Button Group',
+        content: (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <ButtonGroup>
+              <Button variant="outline" style={{ border: 'none', borderRadius: 0, boxShadow: 'none' }}>Day</Button>
+              <Button variant="outline" style={{ border: 'none', borderRadius: 0, boxShadow: 'none' }}>Week</Button>
+              <Button variant="outline" style={{ border: 'none', borderRadius: 0, boxShadow: 'none' }}>Month</Button>
+            </ButtonGroup>
+            <ButtonGroup>
+              <Button variant="outline" icon={Icons.star} style={{ border: 'none', borderRadius: 0, boxShadow: 'none' }}>Star</Button>
+              <Button variant="outline" icon={Icons.copy} style={{ border: 'none', borderRadius: 0, boxShadow: 'none' }}>Fork</Button>
+              <Button variant="outline" icon={Icons.search} style={{ border: 'none', borderRadius: 0, boxShadow: 'none' }}>Watch</Button>
+            </ButtonGroup>
+          </div>
+        ),
+      },
     ],
-    code: `import { Button } from "kazeui"
+    code: `import { Button, ButtonGroup } from "kazeui"
 
 <Button variant="primary" size="md" icon={<Star />}>
   Star repo
-</Button>`,
+</Button>
+
+<ButtonGroup>
+  <Button variant="outline">Day</Button>
+  <Button variant="outline">Week</Button>
+  <Button variant="outline">Month</Button>
+</ButtonGroup>`,
     props: [
       { name: 'variant', type: '"primary" | "secondary" | "outline" | "ghost" | "destructive"', default: '"primary"' },
       { name: 'size', type: '"sm" | "md" | "lg"', default: '"md"' },
