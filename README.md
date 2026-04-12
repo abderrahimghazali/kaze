@@ -1,6 +1,9 @@
-# KazeUI
+<p align="center">
+  <img src="public/kaze-icon.svg" alt="KazeUI" width="48" height="48" />
+</p>
 
-A minimal, composable design system. Clean defaults, sharp details, zero opinions you can't override.
+<h1 align="center">KazeUI</h1>
+<p align="center">A minimal, composable design system.<br/>Clean defaults, sharp details, zero opinions you can't override.</p>
 
 ![KazeUI](https://img.shields.io/badge/version-0.1.0-black) ![React](https://img.shields.io/badge/React-19-blue) ![TanStack Router](https://img.shields.io/badge/TanStack_Router-1-orange) ![Tailwind](https://img.shields.io/badge/Tailwind-4-06B6D4)
 
