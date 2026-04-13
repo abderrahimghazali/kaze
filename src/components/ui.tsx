@@ -907,7 +907,7 @@ export function DataTable({ columns, data, pageSize = 5, searchable = true, sele
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           padding: '10px 16px', borderBottom: `1px solid ${tokens.colors.border}`,
-          background: tokens.colors.surface,
+          background: tokens.colors.surface, gap: 10, flexWrap: 'wrap',
         }}>
           {searchable ? (
             <input
@@ -918,14 +918,14 @@ export function DataTable({ columns, data, pageSize = 5, searchable = true, sele
                 fontFamily: 'var(--kaze-font-sans)', fontSize: 13, height: 32,
                 padding: '0 10px', border: `1px solid ${tokens.colors.border}`,
                 borderRadius: 'var(--kaze-radius-sm)', background: tokens.colors.surface,
-                color: tokens.colors.text, outline: 'none', width: 220,
+                color: tokens.colors.text, outline: 'none', flex: 1, minWidth: 120, maxWidth: 220,
                 transition: 'border-color var(--kaze-transition)',
               }}
               onFocus={(e) => { e.currentTarget.style.borderColor = tokens.colors.borderStrong }}
               onBlur={(e) => { e.currentTarget.style.borderColor = tokens.colors.border }}
             />
           ) : <div />}
-          <span style={{ fontSize: 12, color: tokens.colors.textTertiary, fontFamily: 'var(--kaze-font-mono)' }}>
+          <span style={{ fontSize: 12, color: tokens.colors.textTertiary, fontFamily: 'var(--kaze-font-mono)', whiteSpace: 'nowrap' }}>
             {selected.size > 0 ? `${selected.size} selected · ` : ''}{sorted.length} row{sorted.length !== 1 ? 's' : ''}
           </span>
         </div>
