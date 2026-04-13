@@ -64,7 +64,7 @@ function HomePage() {
           <Badge>v0.2.0</Badge>
         </div>
 
-        <h1 style={{
+        <h1 className="kaze-hero-title" style={{
           fontFamily: 'var(--kaze-font-serif)',
           fontSize: 48,
           fontWeight: 400,
@@ -77,7 +77,7 @@ function HomePage() {
           like <em style={{ fontStyle: 'italic', fontWeight: 300 }}>nothing is there.</em>
         </h1>
 
-        <p style={{
+        <p className="kaze-hero-desc" style={{
           fontSize: 18,
           lineHeight: 1.65,
           color: tokens.colors.textSecondary,
@@ -89,7 +89,7 @@ function HomePage() {
           No npm dependency — you own every line.
         </p>
 
-        <div style={{ display: 'flex', gap: 10, marginBottom: 0 }}>
+        <div className="kaze-hero-actions" style={{ display: 'flex', gap: 10, marginBottom: 0 }}>
           <Link to="/components/button" style={{ textDecoration: 'none' }}>
             <Button variant="primary" size="lg">Browse components</Button>
           </Link>
@@ -137,7 +137,7 @@ function HomePage() {
             </div>
 
             {/* Row 2: Input + Controls */}
-            <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+            <div className="kaze-showcase-row" style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
               <div style={{ flex: 1, maxWidth: 240 }}>
                 <Input placeholder="Search components..." icon={Icons.search} />
               </div>
@@ -146,7 +146,7 @@ function HomePage() {
             </div>
 
             {/* Row 3: Cards */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+            <div className="kaze-showcase-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
               <Card padding="16px" hoverable>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
                   <Avatar name="Abderrahim G" src="/abderrahim.jpg" size={32} status="online" />
@@ -188,7 +188,7 @@ function HomePage() {
 
       {/* ─── QUICK START ─── */}
       <section style={{ animation: 'fadeInUp 600ms 200ms both cubic-bezier(0.22, 1, 0.36, 1)', marginBottom: 64 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+        <div className="kaze-steps-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           <div>
             <SectionHeader>1. Initialize</SectionHeader>
             <CodeBlock code={`npx kazeui-cli init`} />
@@ -239,7 +239,7 @@ export function App() {
           Kaze gives you the source — adapt it, extend it, make it yours.
         </p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, borderRadius: 'var(--kaze-radius-lg)', overflow: 'hidden', border: `1px solid ${tokens.colors.border}` }}>
+        <div className="kaze-principles-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, borderRadius: 'var(--kaze-radius-lg)', overflow: 'hidden', border: `1px solid ${tokens.colors.border}` }}>
           {[
             { title: 'Own the code', desc: 'No npm dependency. Components live in your repo. Fork, edit, ship.' },
             { title: 'Dark mode', desc: 'One data attribute. Every token flips via CSS variables. Zero JS.' },
@@ -281,7 +281,7 @@ export function App() {
             and growing
           </span>
         </div>
-        <div style={{
+        <div className="kaze-component-pills" style={{
           display: 'flex', flexWrap: 'wrap', gap: 6,
         }}>
           {allComponents.map(({ slug, name }) => (
