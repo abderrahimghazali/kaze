@@ -754,6 +754,7 @@ export function CodeBlock({ code }: { code: string; language?: string }) {
       overflow: 'hidden',
     }}>
       <button
+        aria-label={copied ? 'Copied' : 'Copy code'}
         onClick={() => { navigator.clipboard.writeText(code); setCopied(true); setTimeout(() => setCopied(false), 1500) }}
         style={{
           position: 'absolute', top: 10, right: 10,

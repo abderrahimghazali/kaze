@@ -205,6 +205,7 @@ function RootLayout() {
             {/* Mobile menu toggle */}
             <button
               className="kaze-mobile-toggle"
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
               onClick={() => setMenuOpen(!menuOpen)}
               style={{
                 display: 'none', alignItems: 'center', justifyContent: 'center',
@@ -266,6 +267,7 @@ function RootLayout() {
 
             {/* Theme toggle */}
             <button
+              aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
               onClick={toggleTheme}
               style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -294,6 +296,7 @@ function RootLayout() {
               href="https://github.com/abderrahimghazali/kaze"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="GitHub repository"
               style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 width: 34, height: 34,
