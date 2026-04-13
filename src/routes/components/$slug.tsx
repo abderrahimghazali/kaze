@@ -71,7 +71,8 @@ function ComponentPage() {
             gap: 10,
             alignItems: example.align || 'center',
             flexDirection: example.direction || 'row',
-            overflowX: 'auto',
+            overflow: example.overflow === false ? 'visible' : 'auto',
+            minHeight: example.minHeight,
           }}>
             {example.content}
           </div>
