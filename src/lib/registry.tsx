@@ -409,6 +409,7 @@ const [open, setOpen] = useState(false)
         title: 'Default',
         overflow: false,
         minHeight: 220,
+        align: 'flex-start',
         content: (
           <div style={{ display: 'flex', gap: 12 }}>
             <Dropdown
@@ -437,6 +438,7 @@ const [open, setOpen] = useState(false)
         title: 'Right Aligned',
         overflow: false,
         minHeight: 200,
+        align: 'flex-start',
         content: (
           <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
             <Dropdown
