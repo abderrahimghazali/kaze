@@ -348,7 +348,7 @@ export function LoginForm() {
   return (
     <div style={{ display: "flex", justifyContent: "center", padding: "40px 20px" }}>
       <Card padding="32px">
-        <div style={{ width: 340, display: "flex", flexDirection: "column", gap: 16 }}>
+        <div style={{ width: "100%", maxWidth: 340, display: "flex", flexDirection: "column", gap: 16 }}>
           <div style={{ textAlign: "center", marginBottom: 4 }}>
             <h2 style={{
               fontFamily: "var(--kaze-font-serif)", fontSize: 24,
@@ -409,7 +409,7 @@ export function SignUpForm() {
   return (
     <div style={{ display: "flex", justifyContent: "center", padding: "40px 20px" }}>
       <Card padding="32px">
-        <div style={{ width: 380, display: "flex", flexDirection: "column", gap: 16 }}>
+        <div style={{ width: "100%", maxWidth: 380, display: "flex", flexDirection: "column", gap: 16 }}>
           <div style={{ textAlign: "center", marginBottom: 4 }}>
             <h2 style={{
               fontFamily: "var(--kaze-font-serif)", fontSize: 24,
@@ -1600,7 +1600,7 @@ function LoginBlock() {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: '40px 20px', width: '100%' }}>
       <Card padding="32px">
-        <div style={{ width: 340, display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <div style={{ width: '100%', maxWidth: 340, display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div style={{ textAlign: 'center', marginBottom: 4 }}>
             <h2 style={{ fontFamily: 'var(--kaze-font-serif)', fontSize: 24, fontWeight: 400, letterSpacing: '-0.03em', color: tokens.colors.text, marginBottom: 4 }}>Welcome back</h2>
             <p style={{ fontSize: 14, color: tokens.colors.textTertiary }}>Sign in to your account</p>
@@ -1628,7 +1628,7 @@ function SignupBlock() {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: '40px 20px', width: '100%' }}>
       <Card padding="32px">
-        <div style={{ width: 380, display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <div style={{ width: '100%', maxWidth: 380, display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div style={{ textAlign: 'center', marginBottom: 4 }}>
             <h2 style={{ fontFamily: 'var(--kaze-font-serif)', fontSize: 24, fontWeight: 400, letterSpacing: '-0.03em', color: tokens.colors.text, marginBottom: 4 }}>Create an account</h2>
             <p style={{ fontSize: 14, color: tokens.colors.textTertiary }}>Get started with KazeUI</p>
@@ -1830,7 +1830,7 @@ function ThreeDCardBlock() {
         }}
       >
         <div style={{
-          width: 380, padding: 24, borderRadius: 'var(--kaze-radius-lg)',
+          width: '100%', maxWidth: 380, padding: 24, borderRadius: 'var(--kaze-radius-lg)',
           border: `1px solid ${tokens.colors.border}`, background: tokens.colors.surface,
           boxShadow: 'var(--kaze-shadow-lg)', position: 'relative', overflow: 'hidden',
           transformStyle: 'preserve-3d',
