@@ -59,4 +59,9 @@ export const Icons = {
       <path d="M13.5 8.5a5.5 5.5 0 1 1-6-6 4.5 4.5 0 0 0 6 6z" />
     </svg>
   ),
+  menu: (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+      <path d="M3 5h12M3 9h12M3 13h12" />
+    </svg>
+  ),
 }

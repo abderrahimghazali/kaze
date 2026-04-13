@@ -159,6 +159,7 @@ function SearchDialog({ open, onClose }: { open: boolean; onClose: () => void })
 
 function RootLayout() {
   const [searchOpen, setSearchOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const [dark, setDark] = useState(() => document.documentElement.getAttribute('data-theme') === 'dark')
 
   const toggleTheme = () => {
@@ -193,14 +194,28 @@ function RootLayout() {
         borderBottom: `1px solid ${tokens.colors.border}`,
         height: 56,
       }}>
-        <div style={{
+        <div className="kaze-header-inner" style={{
           padding: '0 24px',
           height: 56,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
         }}>
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            {/* Mobile menu toggle */}
+            <button
+              className="kaze-mobile-toggle"
+              onClick={() => setMenuOpen(!menuOpen)}
+              style={{
+                display: 'none', alignItems: 'center', justifyContent: 'center',
+                width: 34, height: 34, border: 'none', background: 'transparent',
+                color: tokens.colors.text, cursor: 'pointer',
+                borderRadius: 'var(--kaze-radius-sm)',
+              }}
+            >
+              {menuOpen ? Icons.x : Icons.menu}
+            </button>
+          <Link to="/" onClick={() => setMenuOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
             <span style={{ color: tokens.colors.accent, display: 'flex' }}>{Icons.wind}</span>
             <span style={{
               fontFamily: 'var(--kaze-font-serif)',
@@ -213,10 +228,12 @@ function RootLayout() {
             </span>
             <Badge>v0.2.0</Badge>
           </Link>
+          </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             {/* Search trigger */}
             <button
+              className="kaze-search-trigger"
               onClick={() => setSearchOpen(true)}
               style={{
                 display: 'flex', alignItems: 'center', gap: 8,
@@ -236,8 +253,8 @@ function RootLayout() {
               onMouseLeave={(e) => { e.currentTarget.style.borderColor = tokens.colors.border }}
             >
               <span style={{ display: 'flex' }}>{Icons.search}</span>
-              <span style={{ flex: 1, textAlign: 'left' }}>Search...</span>
-              <kbd style={{
+              <span className="kaze-search-text" style={{ flex: 1, textAlign: 'left' }}>Search...</span>
+              <kbd className="kaze-search-kbd" style={{
                 fontFamily: 'var(--kaze-font-mono)', fontSize: 11,
                 color: tokens.colors.textTertiary, background: tokens.colors.surfaceActive,
                 padding: '1px 5px', borderRadius: 4,
@@ -296,11 +313,14 @@ function RootLayout() {
       <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
       <Toaster />
 
+      {/* Mobile sidebar overlay */}
+      <div className={`kaze-sidebar-overlay${menuOpen ? ' open' : ''}`} onClick={() => setMenuOpen(false)} />
+
       {/* Body */}
       <div style={{ display: 'flex' }}>
-        <Sidebar />
-        <main style={{ flex: 1, minWidth: 0, padding: '28px 32px' }}>
-          <div style={{ maxWidth: 860, margin: '0 auto' }}>
+        <Sidebar className={menuOpen ? 'open' : ''} onNavigate={() => setMenuOpen(false)} />
+        <main className="kaze-main" style={{ flex: 1, minWidth: 0, padding: '28px 32px' }}>
+          <div className="kaze-main-inner" style={{ maxWidth: 860, margin: '0 auto' }}>
             <Outlet />
           </div>
         </main>

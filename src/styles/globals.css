@@ -100,6 +100,21 @@ body {
   line-height: 1.5;
 }
 
+/* ─── Mobile responsive ─── */
+@media (max-width: 768px) {
+  .kaze-sidebar { display: none !important; }
+  .kaze-sidebar.open { display: flex !important; position: fixed; top: 56px; left: 0; bottom: 0; width: 260px; z-index: 90; background: var(--kaze-bg); border-right: 1px solid var(--kaze-border); }
+  .kaze-sidebar-overlay { display: none; }
+  .kaze-sidebar-overlay.open { display: block; position: fixed; inset: 0; top: 56px; z-index: 80; background: rgba(0,0,0,0.3); }
+  .kaze-mobile-toggle { display: flex !important; }
+  .kaze-search-trigger { min-width: auto !important; }
+  .kaze-search-trigger .kaze-search-text { display: none; }
+  .kaze-search-trigger .kaze-search-kbd { display: none; }
+  .kaze-main { padding: 20px 16px !important; }
+  .kaze-main-inner { max-width: 100% !important; }
+  .kaze-header-inner { padding: 0 12px !important; }
+}
+
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }

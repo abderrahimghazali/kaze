@@ -59,12 +59,12 @@ const navSections = [
   },
 ]
 
-export function Sidebar() {
+export function Sidebar({ className = '', onNavigate }: { className?: string; onNavigate?: () => void }) {
   const { location } = useRouterState()
   const current = location.pathname
 
   return (
-    <aside style={{
+    <aside className={`kaze-sidebar ${className}`} style={{
       width: 240,
       flexShrink: 0,
       borderRight: `1px solid ${tokens.colors.border}`,
@@ -94,6 +94,7 @@ export function Sidebar() {
               <Link
                 key={item.href}
                 to={item.href}
+                onClick={onNavigate}
                 style={{
                   display: 'block',
                   padding: '6px 8px',
