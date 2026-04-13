@@ -356,16 +356,16 @@ export function App() {
 
 function SectionHeader({ children }: { children: React.ReactNode }) {
   return (
-    <h3 style={{
+    <h2 style={{
       fontFamily: 'var(--kaze-font-mono)',
       fontSize: 11,
-      fontWeight: 500,
-      color: tokens.colors.textTertiary,
+      fontWeight: 600,
+      color: tokens.colors.textSecondary,
       letterSpacing: '0.06em',
       textTransform: 'uppercase',
       marginBottom: 10,
     }}>
       {children}
-    </h3>
+    </h2>
   )
 }

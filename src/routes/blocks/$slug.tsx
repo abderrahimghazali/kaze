@@ -2666,10 +2666,10 @@ function BlockPage() {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <h3 style={{
-      fontFamily: 'var(--kaze-font-mono)', fontSize: 11, fontWeight: 500,
-      color: tokens.colors.textTertiary, letterSpacing: '0.06em',
+    <h2 style={{
+      fontFamily: 'var(--kaze-font-mono)', fontSize: 11, fontWeight: 600,
+      color: tokens.colors.textSecondary, letterSpacing: '0.06em',
       textTransform: 'uppercase', marginBottom: 12,
-    }}>{children}</h3>
+    }}>{children}</h2>
   )
 }
