@@ -71,6 +71,7 @@ function ComponentPage() {
             gap: 10,
             alignItems: example.align || 'center',
             flexDirection: example.direction || 'row',
+            overflowX: 'auto',
           }}>
             {example.content}
           </div>

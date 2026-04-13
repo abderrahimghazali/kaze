@@ -792,9 +792,9 @@ export function Table({ columns, rows, striped = false }: {
     <div style={{
       border: `1px solid ${tokens.colors.border}`,
       borderRadius: 'var(--kaze-radius-md)',
-      overflow: 'hidden',
+      overflow: 'hidden', overflowX: 'auto',
     }}>
-      <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--kaze-font-sans)' }}>
+      <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--kaze-font-sans)', minWidth: 480 }}>
         <thead>
           <tr style={{ borderBottom: `1px solid ${tokens.colors.border}`, background: tokens.colors.surfaceHover }}>
             {columns.map((col) => (
@@ -901,7 +901,7 @@ export function DataTable({ columns, data, pageSize = 5, searchable = true, sele
   }
 
   return (
-    <div style={{ border: `1px solid ${tokens.colors.border}`, borderRadius: 'var(--kaze-radius-md)', overflow: 'hidden' }}>
+    <div style={{ border: `1px solid ${tokens.colors.border}`, borderRadius: 'var(--kaze-radius-md)', overflow: 'hidden', overflowX: 'auto' }}>
       {/* Toolbar */}
       {(searchable || selectable) && (
         <div style={{
@@ -932,7 +932,7 @@ export function DataTable({ columns, data, pageSize = 5, searchable = true, sele
       )}
 
       {/* Table */}
-      <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--kaze-font-sans)' }}>
+      <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--kaze-font-sans)', minWidth: 540 }}>
         <thead>
           <tr style={{ borderBottom: `1px solid ${tokens.colors.border}`, background: tokens.colors.surfaceHover }}>
             {selectable && (
