@@ -72,7 +72,6 @@ function ComponentPage() {
             alignItems: example.align || 'center',
             flexDirection: example.direction || 'row',
             overflow: example.overflow === false ? 'visible' : 'auto',
-            minHeight: example.minHeight,
           }}>
             {example.content}
           </div>
