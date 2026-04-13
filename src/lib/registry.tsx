@@ -301,7 +301,7 @@ export const registry: Record<string, Entry> = {
         title: 'Default',
         direction: 'column',
         content: (
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, width: '100%' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 12, width: '100%' }}>
             <Card hoverable padding="20px">
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
                 <Avatar name="Abderrahim G" src={p('Abderrahim G')} size={32} />
