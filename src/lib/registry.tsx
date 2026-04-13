@@ -562,6 +562,7 @@ const [open, setOpen] = useState(false)
       {
         title: 'Default',
         direction: 'column',
+        overflow: false,
         content: (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: 280 }}>
             <Select
@@ -593,6 +594,7 @@ const [open, setOpen] = useState(false)
       {
         title: 'Multiple',
         direction: 'column',
+        overflow: false,
         content: (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: 320 }}>
             <Select
