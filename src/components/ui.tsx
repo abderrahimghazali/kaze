@@ -901,7 +901,7 @@ export function DataTable({ columns, data, pageSize = 5, searchable = true, sele
   }
 
   return (
-    <div style={{ border: `1px solid ${tokens.colors.border}`, borderRadius: 'var(--kaze-radius-md)', overflow: 'hidden', overflowX: 'auto' }}>
+    <div style={{ border: `1px solid ${tokens.colors.border}`, borderRadius: 'var(--kaze-radius-md)', overflow: 'hidden' }}>
       {/* Toolbar */}
       {(searchable || selectable) && (
         <div style={{
@@ -931,7 +931,8 @@ export function DataTable({ columns, data, pageSize = 5, searchable = true, sele
         </div>
       )}
 
-      {/* Table */}
+      {/* Table — scrollable */}
+      <div style={{ overflowX: 'auto' }}>
       <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--kaze-font-sans)', minWidth: 540 }}>
         <thead>
           <tr style={{ borderBottom: `1px solid ${tokens.colors.border}`, background: tokens.colors.surfaceHover }}>
@@ -998,6 +999,7 @@ export function DataTable({ columns, data, pageSize = 5, searchable = true, sele
           })}
         </tbody>
       </table>
+      </div>
 
       {/* Pagination */}
       {totalPages > 1 && (
