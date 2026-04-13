@@ -218,16 +218,10 @@ function RootLayout() {
             </button>
           <Link to="/" onClick={() => setMenuOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
             <span style={{ color: tokens.colors.accent, display: 'flex' }}>{Icons.wind}</span>
-            <span style={{
-              fontFamily: 'var(--kaze-font-serif)',
-              fontSize: 18,
-              fontWeight: 500,
-              letterSpacing: '-0.03em',
-              color: tokens.colors.text,
-            }}>
-              kaze<span style={{ fontWeight: 300 }}>ui</span>
+            <span style={{ display: 'flex', alignItems: 'baseline', letterSpacing: '-0.03em' }}>
+              <span style={{ fontFamily: 'var(--kaze-font-mono)', fontSize: 16, fontWeight: 500, color: tokens.colors.text }}>kaze</span>
+              <span style={{ fontFamily: 'var(--kaze-font-sans)', fontSize: 16, fontWeight: 400, color: tokens.colors.textTertiary }}>ui</span>
             </span>
-            <Badge>v0.2.0</Badge>
           </Link>
           </div>
 
